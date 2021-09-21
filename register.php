@@ -2,6 +2,7 @@
 include_once "includes/header.inc.php";
 ?>
 
+
 <div class="col-lg-12 col-md-12">
                     <div class="register-form">
                         <h2>Register</h2>
