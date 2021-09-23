@@ -2,7 +2,6 @@
 include_once "includes/header.inc.php";
 ?>
 
-
 <div class="col-lg-12 col-md-12">
                     <div class="register-form">
                         <h2>Register</h2>
@@ -17,7 +16,7 @@ include_once "includes/header.inc.php";
                             </div>
                             <div class="form-group">
                                 <label>Surname</label>
-                                <input type="text" data-parsley-required-message="Please enter your last name" name = "surname" class="form-control" placeholder="Name" data-parsley-length="[4, 25]" data-parsley-group="block1" required="">
+                                <input type="text" data-parsley-required-message="Please enter your last name" name = "surname" class="form-control" placeholder="Surname" data-parsley-length="[4, 25]" data-parsley-group="block1" required="">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -44,7 +43,7 @@ include_once "includes/header.inc.php";
                                 <label for="role3"> Shopper</label>
                             </div>
                             <div class="form-group">
-                            <button type="submit" value = "register" name = "submitRegister" style="margin-top: 20px;">Register Now</button>
+                            <button type="submit" value = "register" name = "submitRegister" style="margin-top: 20px;">Next Step</button>
                             </div>
                         </form>
                         </body>
