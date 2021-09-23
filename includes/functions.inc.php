@@ -56,10 +56,3 @@ function emailExists($conn, $email)
 
     mysqli_stmt_close($stmt);
 }
-
-function getLastUserID($conn){
-    $sql= mysqli_query( $conn,"SELECT MAX( userID ) AS max FROM users;" );
-    $res = mysqli_fetch_assoc( $sql);
-    $maxID = $res['max'];
-    return $maxID; 
-}

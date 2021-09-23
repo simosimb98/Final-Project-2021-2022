@@ -1,11 +1,8 @@
 <?php
 
-session_start();
-
 if(isset($_POST['submitRegister'])){
 
     include_once 'capdb.inc.php';
-    include_once 'functions.inc.php';
     
     $first = mysqli_real_escape_string($conn,$_POST['firstname']);
     $last = mysqli_real_escape_string($conn, $_POST['surname']);
@@ -21,7 +18,6 @@ if(isset($_POST['submitRegister'])){
 	}
 
     $sql = "INSERT INTO users (name, surname, email, phone, password, role) VALUES (?,?,?,?,?,?);";
-    $sql = "INSERT INTO users (name, surname, email, phone, password, role) VALUES (?,?,?,?,?,?);";
 
 
     $stmt = mysqli_stmt_init($conn);
@@ -34,6 +30,6 @@ if(isset($_POST['submitRegister'])){
         mysqli_stmt_bind_param($stmt,"sssisi", $first, $last, $email, $phone, $hashedPwd, $role);
         mysqli_stmt_execute($stmt);
     }
-        header('Location: ../userLocationDetails.php?register=success?id='.$maxID.'');
+        header('Location: ../userLocationDetails.php');
         exit();
 }
