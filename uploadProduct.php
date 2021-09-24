@@ -3,17 +3,7 @@ include_once "includes/header.inc.php";
 ?>
 
 <script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
-<style type="text/css">
- .scrollable{
-   overflow: auto;
-   width: 150px; /* adjust this width depending to amount of text to display */
-   height: 80px; /* adjust height depending on number of options to display */
-   border: 1px;
- }
- .scrollable select{
-   border: none;
- }
-</style>
+
 
 <div class="col-lg-12 col-md-12">
                     <div class="register-form">
@@ -25,8 +15,8 @@ include_once "includes/header.inc.php";
                                 <div class = "scrollable">
                                 <select name = "carbrand" id = "carbrand" onchange="random()" required="">
                                 <option value ="audi">Audi</option>
-                                <option value ="alpharome">Alpha Romeo</option>
-                                <option value ="bmw">BMW</option>
+                                <option value ="alpharomeo">Alpha Romeo</option>
+                                <option value="BMW">BMW</option>
                                 <option value ="citroen">Citroen</option>
                                 <option value ="chevrolet">Chevrolet</option>
                                 <option value ="dacia">Dacia</option>
@@ -41,10 +31,10 @@ include_once "includes/header.inc.php";
                                 <option value ="landrover">Land Rover</option>
                                 <option value ="lexus">Lexus</option>
                                 <option value ="mitsubishi">Mitsubishi</option>
-                                <option value ="mercedes">Mercedes</option>
+                                <option value ="Mercedes">Mercedes</option>
                                 <option value ="mazda">Mazda</option>
                                 <option value ="mini">Mini</option>
-                                <option value ="nissa">Nissan</option>
+                                <option value ="nissan">Nissan</option>
                                 <option value ="opel">Opel</option>
                                 <option value ="peugot">Peugot</option>
                                 <option value ="renault">Renault</option>
@@ -62,15 +52,17 @@ include_once "includes/header.inc.php";
                                 </div>
                                 <br>
                             </div>
+
                             <div class="form-group">
                             <label>Car model</label>
-                            </div>
-                            <div class="form-group">
+                            <div class="form-group" id = "carmodel">
                                 <select name = "carmodel">
-                                <option></option>
+                                    <option></option>
                                 </select>
                                 <br>
+                             </div>
                             </div>
+
                             <div class="form-group">
                                 <label>Engine Size</label>
                                 <select name = "enginesize" id = "enginesize" required="">
