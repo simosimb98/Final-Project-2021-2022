@@ -4,7 +4,6 @@ include_once "includes/header.inc.php";
 
 <script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
 
-
 <div class="col-lg-12 col-md-12">
                     <div class="register-form">
                         <h2>Product Details</h2>
@@ -16,7 +15,7 @@ include_once "includes/header.inc.php";
                                 <select name = "carbrand" id = "carbrand" onchange="random()" required="">
                                 <option value ="audi">Audi</option>
                                 <option value ="alpharomeo">Alpha Romeo</option>
-                                <option value="BMW">BMW</option>
+                                <option>BMW</option>
                                 <option value ="citroen">Citroen</option>
                                 <option value ="chevrolet">Chevrolet</option>
                                 <option value ="dacia">Dacia</option>
@@ -88,8 +87,8 @@ include_once "includes/header.inc.php";
 
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control rounded-0" name="description" id="description" rows="20" cols="100" style = "height: 150px;"
-                                data-parsley-required-message="Please enter a description" data-parsley-length="[50, 1200]" placeholder = "Description" required=""></textarea>
+                                <textarea class="form-control rounded-0" name="description" id="description" rows="3" cols="100" style = "height: 150px;"
+                                data-parsley-required-message="Please enter a description" data-parsley-length="[10, 1200]" placeholder = "Description" required=""></textarea>
                             </div>
         
                             <div class="form-group">

@@ -1,12 +1,10 @@
 <?php
-
 session_start();
 
 if(isset($_POST['registerProductDetails'])){
 
     include_once 'capdb.inc.php';
-
-    $userID = $_SESSION['userID'];
+    include_once 'functions.inc.php';
 
     $brand = mysqli_real_escape_string($conn, $_POST['carbrand']);
     $model = mysqli_real_escape_string($conn, $_POST['carmodel']);
@@ -15,8 +13,9 @@ if(isset($_POST['registerProductDetails'])){
     $productname = mysqli_real_escape_string($conn, $_POST['productname']);
     $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
+    $currentUserID = $_SESSION['userID'];
 
-    $productDetailsQuery = "INSERT INTO partsdetails (userID, car_brand, car_model, year, engine_size, productname, availability quantity, description) VALUES ($userID,?,?,?,?,?,1,?,?);";
+    $productDetailsQuery = "INSERT INTO partsdetails (userID, car_brand, car_model, year, engine_size, productname, availability, quantity, description) VALUES ($currentUserID,?,?,?,?,?,1,?,?);";
 
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt, $productDetailsQuery)){
@@ -24,7 +23,7 @@ if(isset($_POST['registerProductDetails'])){
     }
     else{
 
-        mysqli_stmt_bind_param($stmt, "ssifsis", $brand, $model, $year, $enginesize,$productname, $quantity, $description);
+        mysqli_stmt_bind_param($stmt, "ssidsis", $brand, $model, $year, $enginesize,$productname, $quantity, $description);
         mysqli_stmt_execute($stmt);
     }
     header('Location: ../index.php?uploadDetails=success');

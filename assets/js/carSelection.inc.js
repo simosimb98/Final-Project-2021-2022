@@ -16,8 +16,8 @@ function random(){
 
     var string ='';
     for(i=0;i<array.length;i++){
-        string = string+'<option value = "' +array[i]+ '">'+array[i]+'</option>';
+        string = string+'<option>'+array[i]+'</option>';
     }
-    string="<select name ='carmodel'>"+string+"</select>"; 
+    string="<select>"+string+"</select>"; 
     document.getElementById('carmodel').innerHTML=string;
 }
