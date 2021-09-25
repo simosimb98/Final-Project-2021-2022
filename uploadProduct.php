@@ -4,63 +4,69 @@ include_once "includes/header.inc.php";
 
 <script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
 
+<style>
+    #rectangle1{
+    width:210px;
+    height:40px;
+    background:#f9f7fc;
+    top: 372px;
+    bottom: 450px;
+    position: absolute;
+    z-index : 1;
+}
+
+#rectangle2{
+    width:240px;
+    height:40px;
+    background:#f9f7fc;
+    top: 474px;
+    bottom: 450px;
+    position: absolute;
+    z-index : 1;
+}
+
+#rectangle3{
+    width:250px;
+    height:46px;
+    background:#f9f7fc;
+    top: 576px;
+    bottom: 450px;
+    position: absolute;
+    z-index : 1;
+}
+</style>
+
 <div class="col-lg-12 col-md-12">
                     <div class="register-form">
                         <h2>Product Details</h2>
                         <body>
                         <form action = "includes/getProducDetails.inc.php" method="POST" data-parsley-validate="">
+                        <div id="rectangle1"></div>
                             <div class="form-group">
                                 <label>Car brand</label>
-                                <div class = "scrollable">
-                                <select name = "carbrand" id = "carbrand" onchange="random()" required="">
-                                <option value ="audi">Audi</option>
-                                <option value ="alpharomeo">Alpha Romeo</option>
-                                <option>BMW</option>
-                                <option value ="citroen">Citroen</option>
-                                <option value ="chevrolet">Chevrolet</option>
-                                <option value ="dacia">Dacia</option>
-                                <option value ="datsun">Datsun</option>
-                                <option value ="ford">Ford</option>
-                                <option value ="fiat">Fiat</option>
-                                <option value ="honda">Honda</option>
-                                <option value ="hyundai">Hyundai</option>
-                                <option value ="isuzu">Isuzu</option>
-                                <option value ="jeep">Jeep</option>
-                                <option value ="kia">KIA</option>
-                                <option value ="landrover">Land Rover</option>
-                                <option value ="lexus">Lexus</option>
-                                <option value ="mitsubishi">Mitsubishi</option>
-                                <option value ="Mercedes">Mercedes</option>
-                                <option value ="mazda">Mazda</option>
-                                <option value ="mini">Mini</option>
-                                <option value ="nissan">Nissan</option>
-                                <option value ="opel">Opel</option>
-                                <option value ="peugot">Peugot</option>
-                                <option value ="renault">Renault</option>
-                                <option value ="saab">Saab</option>
-                                <option value ="seat">SEAT</option>
-                                <option value ="subaru">Subaru</option>
-                                <option value ="skoda">Skoda</option>                                
-                                <option value ="smart">Smart</option>
-                                <option value ="suzuki">Suzuki</option>
-                                <option value ="toyota">Toyota</option>
-                                <option value ="volvo">Volvo</option>
-                                <option value ="vauxhall">Vauxhall</option>
-                                <option value ="volkswagen">Volkswagen</option>
+                                <select name = "carbrand" id = "carbrand" required="">
+                                <option value="" selected="selected" style = "display: none;">Please select a car brand</option>
                                 </select>
-                                </div>
                                 <br>
                             </div>
 
+                            <div id="rectangle2"></div>
                             <div class="form-group">
                             <label>Car model</label>
-                            <div class="form-group" id = "carmodel">
-                                <select name = "carmodel">
-                                    <option></option>
+                                <select name = "carmodel" id = "carmodel">
+                                    <option value="" selected="selected" style = "display: none;">Please select a car brand first</option>
+                                </select>
+                                <br>
+                            </div>
+
+                            <div id="rectangle3"></div>
+                            <div class="form-group">
+                            <label>Year</label>
+                                <select name = "year" id = "year">
+                                    <option value="" selected="selected" style = "display: none">Please select a car model first</option>
                                 </select>
                                 <br>
                              </div>
-                            </div>
 
                             <div class="form-group">
                                 <label>Engine Size</label>
@@ -71,11 +77,6 @@ include_once "includes/header.inc.php";
                                 <br>
                             </div>
                             
-                            <div class="form-group">
-                                <label>Year</label>
-                                <input type="number" data-parsley-required-message="Please enter a year" name = "year" class="form-control" placeholder="Year" data-parsley-minlength="4" 
-                                 data-parsley-maxlength="4" required="">
-                            </div>
                             <div class="form-group">
                                 <label>Product name</label>
                                 <input type="text" data-parsley-required-message="Please enter the product's name" name = "productname" class="form-control" placeholder="Product name" data-parsley-length="[4, 25]" required="">
