@@ -16,8 +16,13 @@ if(isset($_POST['submitRegister'])){
         header('Location: ../register.php?error=emailExists');
 		exit();
 	}
-
-    $sql = "INSERT INTO users (name, surname, email, phone, password, role) VALUES (?,?,?,?,?,?);";
+     
+    if($role == 4){
+    $sql = "INSERT INTO users (name, surname, email, phone, password, role, status) VALUES (?,?,?,?,?,?,1);";
+    }
+    else{
+        $sql = "INSERT INTO users (name, surname, email, phone, password, role, status) VALUES (?,?,?,?,?,?,0);";
+    }
 
 
     $stmt = mysqli_stmt_init($conn);

@@ -213,6 +213,28 @@
               }
             }
 
+            if (isset($_GET['login'])) {
+                if ($_GET['login'] == 'unsuccessfull') {
+                    echo '
+                    <script>
+                    $(document).ready(function(){
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Your account has not been activated yet!",
+                        showConfirmButton: false,
+                        timer: 1600                 
+                    }).then(function() {
+                        window.location = "index.php";
+                    })
+                    });                 
+                    </script>
+                    ';
+                  }
+                }
+
+            
+
             if (isset($_GET['email'])) {
                 if ($_GET['email'] == 'doesnotExist') {
                     echo '

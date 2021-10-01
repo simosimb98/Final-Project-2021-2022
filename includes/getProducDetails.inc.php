@@ -26,7 +26,7 @@ if(isset($_POST['registerProductDetails'])){
         mysqli_stmt_bind_param($stmt, "ssidsis", $brand, $model, $year, $enginesize,$productname, $quantity, $description);
         mysqli_stmt_execute($stmt);
     }
-    header('Location: ../index.php?uploadDetails=success');
+    header('Location: ../uploadProductFiles.php');
     exit();
 }else{
     header('Location: ../uploadProduct.php?error=fatalError');

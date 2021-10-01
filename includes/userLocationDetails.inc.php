@@ -7,13 +7,15 @@ if(isset($_POST['submitLocDetails'])){
     $sqlid= mysqli_query( $conn,"SELECT MAX( userID ) AS max FROM users;" );
     $res = mysqli_fetch_assoc( $sqlid);
     $maxID = $res['max'];
+    
 
     $city = mysqli_real_escape_string($conn,$_POST['city']);
     $country = mysqli_real_escape_string($conn, $_POST['country']);
     $address = mysqli_real_escape_string($conn, $_POST['address']);
     $postalcode = mysqli_real_escape_string($conn, $_POST['postalcode']);
+    $shop = mysqli_real_escape_string($conn, $_POST["shop"]);
     
-    $sql = "INSERT INTO usersdetails (userID, country, city, address, postalcode) VALUES ($maxID,?,?,?,?);";
+    $sql = "INSERT INTO usersdetails (userID, country, city, address, postalcode, shop) VALUES ($maxID,?,?,?,?,?);";
 
 
     $stmt = mysqli_stmt_init($conn);
@@ -22,7 +24,7 @@ if(isset($_POST['submitLocDetails'])){
     }else{
 
 
-        mysqli_stmt_bind_param($stmt,"sssi", $country, $city, $address, $postalcode);
+        mysqli_stmt_bind_param($stmt,"sssis", $country, $city, $address, $postalcode, $shop);
         mysqli_stmt_execute($stmt);
     }
         header('Location: ../index.php?registration=success');

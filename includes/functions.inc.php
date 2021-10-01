@@ -19,7 +19,15 @@ function logInUser($conn, $email, $password)
 
         exit();
     } else if ($checkPassword === true) {
+
         $_SESSION['userID'] = $userIDExists['userID'];
+
+        $checkStatus = mysqli_query($conn,"SELECT status FROM users WHERE userID = '".$_SESSION['userID']."';");
+        $result = mysqli_fetch_array($checkStatus);
+        $status = $result['status'];
+        
+        if($status == 1){
+
         $_SESSION['name'] = $userIDExists['name'];
         $_SESSION['surname'] = $userIDExists['surname'];
         $_SESSION['phone'] = $userIDExists['phone'];
@@ -30,6 +38,11 @@ function logInUser($conn, $email, $password)
         exit();
 
         //}
+        }
+        else{
+            header('Location: ../index.php?login=unsuccessfull');
+            exit();
+        }
     }
 }
 
