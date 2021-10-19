@@ -1,5 +1,9 @@
 <?php
 session_start();
+$url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+$res = preg_replace('/\?[^?]*$/', '', $escaped_url);
+$_SESSION['lastVisitedPage'] = $res;
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -68,7 +72,7 @@ session_start();
                     <ul class="top-header-information">
                         <li>
                             <i class="flaticon-pin"></i>
-                            565, Nyman Tower Melbourne, Australia
+                            Limassol, Cyprus University of Technology
                         </li>
                         <li>
                             <i class="flaticon-clock"></i>
@@ -78,7 +82,7 @@ session_start();
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="top-header-optional">
-                        <li>Currency: <b>USD</b></li>
+                        <li>Currency: <b>EU</b></li>
                         <li>
                             <div class="dropdown language-switcher d-inline-block">
                                 <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -145,8 +149,7 @@ session_start();
             </div>
         </div>
     </div>
-
-
+    
     <div class="navbar-area navbar-two">
         <div class="main-responsive-nav">
             <div class="container">
@@ -174,49 +177,13 @@ session_start();
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
-                                    Pages
-                                    <i class='bx bx-chevron-down'></i>
+                                    About
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a href="team.php" class="nav-link">
-                                            Our Team
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="compare.php" class="nav-link">
-                                            Compare
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="shop.php" class="nav-link">
                                     Shop
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Blog
-                                    <i class='bx bx-chevron-down'></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a href="blog.php" class="nav-link">
-                                            Blog
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="blog-right-sidebar.php" class="nav-link">
-                                            Blog Right Sidebar
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="blog-details.php" class="nav-link">
-                                            Blog Details
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="contact.php" class="nav-link">
@@ -225,7 +192,7 @@ session_start();
                             </li>
                             <?php
                             if(isset($_SESSION['role'])){
-                                if($_SESSION['role'] == 1 || $_SESSION['role'] == 2  || $_SESSION['role'] == 3){
+                                if($_SESSION['role'] == 2  || $_SESSION['role'] == 3){
                                 echo " <li class='nav-item'>
                                 <a href='uploadProduct.php' class='nav-link'>
                                 Upload a Part

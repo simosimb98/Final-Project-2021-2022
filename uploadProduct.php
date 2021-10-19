@@ -2,8 +2,8 @@
 include_once "includes/header.inc.php";
 ?>
 
-<script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
 
+<!--
 <style>
     #rectangle1{
     width:210px;
@@ -35,26 +35,27 @@ include_once "includes/header.inc.php";
     z-index : 1;
 }
 </style>
+-->
 
 <div class="col-lg-12 col-md-12">
-                    <div class="register-form">
+                    <div class="register-form" style="display: block;">
                         <h2>Product Details</h2>
                         <body>
                         <form action = "includes/getProducDetails.inc.php" method="POST" data-parsley-validate="">
                         <div id="rectangle1"></div>
                             <div class="form-group">
                                 <label>Car brand</label>
-                                <select name = "carbrand" id = "carbrand" required="">
-                                <option value="" selected="selected" style = "display: none;">Please select a car brand</option>
+                                <select name = "carbrand" id = "carbrand">
+                                <option value="" selected="selected">Please select a car brand</option>
                                 </select>
-                                <br>
+                                <br><br>
                             </div>
 
                             <div id="rectangle2"></div>
                             <div class="form-group">
                             <label>Car model</label>
                                 <select name = "carmodel" id = "carmodel">
-                                    <option value="" selected="selected" style = "display: none;">Please select a car brand first</option>
+                                    <option value="" selected="selected">Please select a car brand first</option>
                                 </select>
                                 <br>
                             </div>
@@ -63,7 +64,7 @@ include_once "includes/header.inc.php";
                             <div class="form-group">
                             <label>Year</label>
                                 <select name = "year" id = "year">
-                                    <option value="" selected="selected" style = "display: none">Please select a car model first</option>
+                                    <option value="" selected="selected">Please select a car model first</option>
                                 </select>
                                 <br>
                              </div>
@@ -76,6 +77,41 @@ include_once "includes/header.inc.php";
                                 </select>
                                 <br>
                             </div>
+
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name = "category" id = "category" required="">
+                                <option value="oilsandfluids">Oils and fluids</option>
+                                <option value="brakesystem">Brake System</option>
+                                <option value="filters">Filters</option>
+                                <option value="engine">Engine</option>
+                                <option value="windscreencleaningsystem">Windscreen cleaning system</option>
+                                <option value="Ingnition and Glowplug System">Brake System</option>
+                                <option value="suspensionandarms">Suspension and Arms</option>
+                                <option value="electrics">Electrics</option>
+                                <option value="damping">Damping</option>
+                                <option value="beltschainsrollers">Belts, Chains, Rollers</option>
+                                <option value="body">Body</option>
+                                <option value="heater">Heater</option>
+                                <option value="gasketsandsealingrings">Gaskets and Sealing Rings</option>
+                                <option value="exhaustsystem">Exhaust System</option>
+                                <option value="interiorandcomfort">Interior and Comfort</option>
+                                <option value="fuelsupplysystem">Fuel Supply System</option>
+                                <option value="steering">Steering</option>
+                                <option value="clutchparts">Clutch/Parts</option>
+                                <option value="transmission">Transmission</option>
+                                <option value="airconditioning">Air Conditioning</option>
+                                <option value="bearings">Bearings</option>
+                                <option value="propshaftanddifferentials">Propshafts and Differentials</option>
+                                <option value="towbarparts">Towbar/Parts</option>
+                                <option value="sensorrelayscus">Towbar/Parts</option>
+                                <option value="sensorrelayscus">Sensors, Relays, Control units</option>
+                                <option value="repairkits">Repair Kits</option>
+                                <option value="pipesandhoses">Pipes and Hoses</option>
+                                <option value="accessories">Accessories</option>
+                                </select>
+                                <br>
+                            </div>
                             
                             <div class="form-group">
                                 <label>Product name</label>
@@ -83,7 +119,11 @@ include_once "includes/header.inc.php";
                             </div>
                             <div class="form-group">
                                 <label>Quantity</label>
-                                <input type="number" data-parsley-required-message="Please enter the ammount of products available" name = "quantity" class="form-control" placeholder="Quantity" data-parsley-length="[1, 3]" required="">
+                                <input type="number" data-parsley-required-message="Please enter the ammount of products available" name = "quantity" class="form-control" placeholder="Quantity" data-parsley-length="[1, 10]" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="number" data-parsley-required-message="Please enter the price of the product" name = "price" class="form-control" placeholder="Price" data-parsley-length="[1, 10000]" required="">
                             </div>
 
                             <div class="form-group">
@@ -96,6 +136,8 @@ include_once "includes/header.inc.php";
                             <button type="submit" value = "registerProductDetails" name = "registerProductDetails" style="margin-top: 20px;">Register Product</button>
                             </div>
                         </form>
+                        <script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
+
                         </body>
                 </div>
             </div>

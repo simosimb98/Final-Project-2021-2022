@@ -1,13 +1,14 @@
+
 <section class="footer-area pt-100 pb-70">
         <div class="container">
+
+    
             <div class="row">
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-footer-widget">
                         <a href="index.html">
                             <img src="assets/img/logo-2.png" alt="image">
                         </a>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.</p>
                         <ul class="footer-social">
                             <li>
                                 <a href="#" target="_blank">
@@ -21,61 +22,14 @@
                             </li>
                             <li>
                                 <a href="#" target="_blank">
-                                    <i class='bx bxl-pinterest-alt'></i>
+                                    <i class='bx bxl-instagram'></i>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" target="_blank">
-                                    <i class='bx bxl-linkedin'></i>
-                                </a>
-                            </li>
+                         
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-footer-widget">
-                        <h2>Recent Post</h2>
-                        <div class="footer-post">
-                            <article class="item">
-                                <a href="#" class="thumb">
-                                    <span class="fullimage cover bg1" role="img"></span>
-                                </a>
-                                <div class="info">
-                                    <h4 class="title usmall">
-                                        <a href="#">Electronic Car Protect Air Pollution</a>
-                                    </h4>
-                                    <span>24 Dec 2021</span>
-                                </div>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="thumb">
-                                    <span class="fullimage cover bg2" role="img"></span>
-                                </a>
-                                <div class="info">
-                                    <h4 class="title usmall">
-                                        <a href="#">Automotive Advancements to Look Forward</a>
-                                    </h4>
-                                    <span>25 Dec 2021</span>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-footer-widget pl-5">
-                        <h2>Quick Links</h2>
-                        <ul class="quick-links">
-                            <li>
-                                <i class='bx bxs-chevrons-right'></i>
-                                <a href="#">About Company</a>
-                            </li>
-                            <li>
-                                <i class='bx bxs-chevrons-right'></i>
-                                <a href="#">Gallery</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-footer-widget">
                         <h2>Information</h2>
@@ -83,26 +37,35 @@
                             <li>
                                 <i class='bx bxs-phone'></i>
                                 <span>Phone</span>
-                                <a href="tel:882569756">882-569-756</a>
+                                <p href="tel:882569756">(+357) 99982830</p>
                             </li>
                             <li>
                                 <i class='bx bx-envelope'></i>
                                 <span>Email</span>
-                                <a
-                                    href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#48202d242427082529302726662b2725"><span
-                                        class="__cf_email__"
-                                        data-cfemail="127a777e7e7d527f736a7d7c3c717d7f">[email&#160;protected]</span></a>
+                                <p href="sg.immbraem@edu.cut.ac.cy">sg.immbraem@edu.cut.ac.cy</p>
                             </li>
                             <li>
                                 <i class='bx bx-map'></i>
                                 <span>Address</span>
-                                175 5th Ave Premium Area, New York
+                                Archiepiskopou Kyprianou 30, Limassol 3036
                             </li>
                         </ul>
                     </div>
                 </div>
+
+                <div class="col-lg-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <div class="newsletter-content">
+                    <h2>Subscribe to our newsletter!</h2>
+                       <form action = "includes/regnews.inc.php"  method = "POST">
+                          <input type="email" placeholder="Enter Email Address" name="email" style = "height: 34px; width: 500px;">
+                          <input type="submit" name="submit" value="Subscribe" class="btn btn-danger">       
+                       </form>
+              </div>
             </div>
         </div>
+      </div>
+
     </section>
 
 
@@ -132,7 +95,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="go-top">
         <i class='bx bx-up-arrow-alt'></i>
@@ -192,6 +154,26 @@
             ';
           }
         }
+
+        if (isset($_GET['registration'])) {
+            if ($_GET['registration'] == 'successSorV') {
+                echo '
+                <script>
+                $(document).ready(function(){
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Your account is up for review and will be activated shortly!",
+                    showConfirmButton: false,
+                    timer: 1600                 
+                }).then(function() {
+                    window.location = "index.php";
+                })
+                });                 
+                </script>
+                ';
+              }
+            }
 
         if (isset($_GET['login'])) {
             if ($_GET['login'] == 'successfull') {
@@ -295,6 +277,83 @@
                           }
                         }
 
+                        if (isset($_GET['upload'])) {
+                            if ($_GET['upload'] == 'success') {
+                                echo '
+                                <script>
+                                $(document).ready(function(){
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Your images have been uploaded!",
+                                    showConfirmButton: false,
+                                    timer: 3500                 
+                                }).then(function() {
+                                    window.location = "uploadProductFiles.php";
+                                })
+                                });                 
+                                </script>
+                                ';
+                              }
+                            }
+
+                            if (isset($_GET['upload'])) {
+                                if ($_GET['upload'] == 'wrongfileformat') {
+                                    echo '
+                                    <script>
+                                    $(document).ready(function(){
+                                    Swal.fire({
+                                        position: "center",
+                                        icon: "error",
+                                        title: "Allowed extensions are jpg, jpeg and png!",
+                                        showConfirmButton: false,
+                                        timer: 3500                 
+                                    }).then(function() {
+                                        window.location = "uploadProductFiles.php";
+                                    })
+                                    });                 
+                                    </script>
+                                    ';
+                                  }
+                                }
+
+                                if (isset($_GET['newsletter'])) {
+                                    if ($_GET['newsletter'] == 'success') {
+                                        echo '
+                                        <script>
+                                        $(document).ready(function(){
+                                        Swal.fire({
+                                            position: "center",
+                                            icon: "success",
+                                            title: "Thanks for subscribing!",
+                                            showConfirmButton: false,
+                                            timer: 3500                 
+                                        }).then(function() {
+                                        })
+                                        });                 
+                                        </script>
+                                        ';
+                                      }
+                                    }
+
+                                    if (isset($_GET['newsletter'])) {
+                                        if ($_GET['newsletter'] == 'fail') {
+                                            echo '
+                                            <script>
+                                            $(document).ready(function(){
+                                            Swal.fire({
+                                                position: "center",
+                                                icon: "error",
+                                                title: "Something went wrong, Please try again!",
+                                                showConfirmButton: false,
+                                                timer: 3500                 
+                                            }).then(function() {
+                                            })
+                                            });                 
+                                            </script>
+                                            ';
+                                          }
+                                        }
 
 ?>
 

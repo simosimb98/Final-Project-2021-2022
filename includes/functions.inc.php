@@ -33,8 +33,8 @@ function logInUser($conn, $email, $password)
         $_SESSION['phone'] = $userIDExists['phone'];
         $_SESSION['email'] = $userIDExists['email'];
         $_SESSION['role'] = $userIDExists['role'];
-        header('Location: ../index.php?login=successfull');
-       
+        $_SESSION['lastVisitedPage'] .= '?error=noneLogin';
+        header('location: ' . $_SESSION['lastVisitedPage']);       
         exit();
 
         //}

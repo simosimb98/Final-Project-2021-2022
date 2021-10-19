@@ -297,12 +297,10 @@ var brandYear = {
 
   
   window.onload = function() {
+    
     var brandSel = document.getElementById("carbrand");
-    document.getElementById("carbrand").style.display = "block"; 
     var modelSel = document.getElementById("carmodel");
-    document.getElementById("carmodel").style.display = "block"; 
     var yearSel = document.getElementById("year");
-    document.getElementById("year").style.display = "block"; 
     for (var x in brandYear) {
       brandSel.options[brandSel.options.length] = new Option(x, x);
     }
@@ -324,4 +322,7 @@ var brandYear = {
         yearSel.options[yearSel.options.length] = new Option(z[i], z[i]);
       }
     }
+    document.getElementById("carbrand").style.display = "block"; 
+    document.getElementById("carmodel").style.display = "block"; 
+    document.getElementById("year").style.display = "block"; 
   }
