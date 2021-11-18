@@ -25,7 +25,6 @@ include_once "includes/header.inc.php";
     </div>
 
 
-    <section class="my-account-area ptb-100">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">

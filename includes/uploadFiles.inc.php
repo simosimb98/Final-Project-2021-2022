@@ -20,17 +20,18 @@ if(isset($_POST['submitPhotos'])){
 
         $imageFileType = strtolower(pathinfo($target_fileEXT,PATHINFO_EXTENSION));
         
-        if(!in_array($imageFileType, array())){
+        if(in_array($imageFileType, array("jpg","jpeg","png"))){
+            
           
         if(move_uploaded_file($imageTempName, $targetPath)){
 
             $sql = "INSERT into carpartsmultimedia (carpartID, photo) VALUES ($maxID, '$imageName');";
             $result = mysqli_query($conn, $sql);
-        }
-     }
-     header('Location: ../uploadProductFiles.php?upload=wrongfileformat');
-     exit();
-
+         }
+       }else{
+        header('Location: ../index.php?upload=wrongfileformat');
+        exit();
+       }
     }
 
     if($result){

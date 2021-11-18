@@ -4,7 +4,6 @@ session_start();
 if(isset($_POST['registerProductDetails'])){
 
     include_once 'capdb.inc.php';
-    include_once 'functions.inc.php';
 
     $brand = mysqli_real_escape_string($conn, $_POST['carbrand']);
     $model = mysqli_real_escape_string($conn, $_POST['carmodel']);

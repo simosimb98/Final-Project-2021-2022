@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if(isset($_POST['submitRegister'])){
 
     include_once 'capdb.inc.php';
@@ -17,8 +19,10 @@ if(isset($_POST['submitRegister'])){
 
 	$select = mysqli_query($conn, "SELECT `email` FROM `users` WHERE `email` = '" . $_POST['email'] . "'") or exit(mysqli_error($conn));
 	if (mysqli_num_rows($select)) {
-        header('Location: ../register.php?error=emailExists');
-		exit();
+
+        $_SESSION['lastVisitedPage'] .= '?error=emailExists';
+        header('location: ' . $_SESSION['lastVisitedPage']);
+        exit();
 	}
      
     if($role == 4){
@@ -44,7 +48,8 @@ if(isset($_POST['submitRegister'])){
         exit();
         }
         else{
-            header('Location: ../index.php?registration=success');
+            $_SESSION['lastVisitedPage'] .= '?registration=success';
+            header('location: ' . $_SESSION['lastVisitedPage']);
             exit();
         }
 }

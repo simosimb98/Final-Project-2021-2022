@@ -303,6 +303,7 @@ var brandYear = {
     var yearSel = document.getElementById("year");
     for (var x in brandYear) {
       brandSel.options[brandSel.options.length] = new Option(x, x);
+      $('select').niceSelect('update');
     }
     brandSel.onchange = function() {
       //empty Chapters- and Topics- dropdowns
@@ -311,6 +312,7 @@ var brandYear = {
       //display correct values
       for (var y in brandYear[this.value]) {
         modelSel.options[modelSel.options.length] = new Option(y, y);
+        $('select').niceSelect('update');
       }
     }
     modelSel.onchange = function() {
@@ -320,9 +322,7 @@ var brandYear = {
       var z = brandYear[brandSel.value][this.value];
       for (var i = 0; i < z.length; i++) {
         yearSel.options[yearSel.options.length] = new Option(z[i], z[i]);
+        $('select').niceSelect('update');
       }
     }
-    document.getElementById("carbrand").style.display = "block"; 
-    document.getElementById("carmodel").style.display = "block"; 
-    document.getElementById("year").style.display = "block"; 
   }

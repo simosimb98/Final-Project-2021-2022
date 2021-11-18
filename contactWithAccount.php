@@ -16,7 +16,7 @@ include_once "includes/header.inc.php";
                             <div class="option-item">
                                 <span>
                                     Hotline:
-                                    <a href="tel:99982830">(+357) 99982830</a>
+                                    <a href="tel:882563789966">(+882) 563 789 966</a>
                                 </span>
                             </div>
                         </div>
@@ -88,42 +88,17 @@ include_once "includes/header.inc.php";
                 <p>Need help with something? Leave us a message and we'll get back to you as soon as possible!</p>
             </div>
             <div class="contact-form">
-                <form id="contactForm" action="includes/contactUsPlainUser.inc.php" method="POST" data-parsley-validate="">
+                <form id="contactForm" data-parsley-validate="" action="includes/contactUs.inc.php" method = "POST">
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" data-parsley-required-message="Please enter your name" name = "firstname" class="form-control" placeholder="Name" data-parsley-length="[4, 25]" data-parsley-group="block1" required=""> 
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>Surname</label>
-                                <input type="text" data-parsley-required-message="Please enter your last name" name = "surname" class="form-control" placeholder="Surname" data-parsley-length="[4, 25]" data-parsley-group="block1" required=""> 
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" data-parsley-required-message="Please enter your email address" name = "email" class="form-control" placeholder="Email" data-parsley-type="email" required="">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="number" data-parsley-required-message="Please enter your phone number" name = "phone" class="form-control" placeholder="Phone" data-parsley-minlength="8" 
-                                 data-parsley-maxlength="16" required="">
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12">
-                        <div class="form-group">
                                 <label>Subject</label>
                                 <input type="text" name="msg_subject" id="msg_subject" class="form-control"
                                 data-parsley-length="[10, 100]" required="" data-parsley-required-message="Please enter your subject" style="width: 990px;">
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label>Message</label>
                                 <textarea name="message" class="form-control" id="message" cols="30" rows="6"
                                 data-parsley-required-message="Please enter your message"
@@ -132,7 +107,6 @@ include_once "includes/header.inc.php";
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <input type="submit" name= "submitMessageFromUser" value = "Send message" class="default-btn">
-                        </div>
                         </div>
                     </div>
                 </form>

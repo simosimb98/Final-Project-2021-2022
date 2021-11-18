@@ -122,6 +122,8 @@ include_once "includes/header.inc.php";
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12">
+                    
+                    <!-- ############################ -->
                     <div class="shop-item-box">
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-sm-3">
@@ -171,6 +173,8 @@ include_once "includes/header.inc.php";
                             </div>
                         </div>
                     </div>
+                    <!-- ############################ -->
+
                     <div class="shop-item-box">
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-sm-3">

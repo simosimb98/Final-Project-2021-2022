@@ -7,17 +7,18 @@ function logInUser($conn, $email, $password)
 
     $userIDExists = emailExists($conn, $email);
     if ($userIDExists === false) {
-        header('location: ../my-account.php?email=doesnotExist');
+        $_SESSION['lastVisitedPage'] .= '?error=wrongLogin';
+        header('location: ' . $_SESSION['lastVisitedPage']);
         exit();
     }
-
     $passwordHashed = $userIDExists['password'];
     $checkPassword = password_verify($password, $passwordHashed);
 
     if ($checkPassword === false) {
-        header('location: ../my-account.php?error=wrongPass');
-
+        $_SESSION['lastVisitedPage'] .= '?error=wrongPass';
+        header('location: ' . $_SESSION['lastVisitedPage']);
         exit();
+        
     } else if ($checkPassword === true) {
 
         $_SESSION['userID'] = $userIDExists['userID'];
@@ -33,6 +34,11 @@ function logInUser($conn, $email, $password)
         $_SESSION['phone'] = $userIDExists['phone'];
         $_SESSION['email'] = $userIDExists['email'];
         $_SESSION['role'] = $userIDExists['role'];
+        $_SESSION['country'] = $userIDExists['country'];
+        $_SESSION['city'] = $userIDExists['city'];
+        $_SESSION['address'] = $userIDExists['address'];
+        $_SESSION['postalcode'] = $userIDExists['postalcode'];
+
         $_SESSION['lastVisitedPage'] .= '?error=noneLogin';
         header('location: ' . $_SESSION['lastVisitedPage']);       
         exit();
@@ -68,4 +74,59 @@ function emailExists($conn, $email)
     }
 
     mysqli_stmt_close($stmt);
+}
+
+function sendEmail($emailFrom, $subject, $message)
+{
+
+    //Prepare and send email
+    //change emails to correct
+    $subject = "General message MAXON Car Auto Parts";
+    $emailTo = 'maxon09987@gmail.com';
+    $headers = 'From: ' . $emailFrom;
+    $emailText = "You have received a new message from: $emailFrom \n\n\n $message";
+
+    if (mail($emailTo, $subject, $emailText, $headers)) {
+        header('Location: ../contactWithAccount.php?mail=sendagain');
+        
+    } else {
+        header('Location: ../contactWithAccount.php?mail=notSend');
+    }
+}
+
+function sendEmailPlainUser($emailFrom, $subject, $message)
+{
+
+    //Prepare and send email
+    //change emails to correct
+    $subject = "General message MAXON Car Auto Parts";
+    $emailTo = 'maxon09987@gmail.com';
+    $headers = 'From: ' . $emailFrom;
+    $emailText = "You have received a new message from: $emailFrom \n\n\n $message";
+
+    if (mail($emailTo, $subject, $emailText, $headers)) {
+        header('Location: ../contact.php?mail=send');
+        
+    } else {
+        header('Location: ../contact.php?mail=notSend');
+    }
+}
+
+//Function to insert inquiry data in database
+function addContactUsInquiry($conn, $name, $surname, $emailFrom, $phone, $subject, $message)
+{
+
+    $sql = 'INSERT INTO contactlist(name,surname,email,phone,subject,message) VALUES (?,?,?,?,?,?); ';
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header('Location: ../contactWithAccount.php?error=stmtFailed');
+        exit();
+    }
+    
+
+    mysqli_stmt_bind_param($stmt, "sssiss", $name, $surname, $emailFrom, $phone, $subject, $message);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    exit();
 }

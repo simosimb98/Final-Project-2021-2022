@@ -2,56 +2,25 @@
 include_once "includes/header.inc.php";
 ?>
 
-
-<!--
 <style>
-    #rectangle1{
-    width:210px;
-    height:40px;
-    background:#f9f7fc;
-    top: 372px;
-    bottom: 450px;
-    position: absolute;
-    z-index : 1;
-}
-
-#rectangle2{
-    width:240px;
-    height:40px;
-    background:#f9f7fc;
-    top: 474px;
-    bottom: 450px;
-    position: absolute;
-    z-index : 1;
-}
-
-#rectangle3{
-    width:250px;
-    height:46px;
-    background:#f9f7fc;
-    top: 576px;
-    bottom: 450px;
-    position: absolute;
-    z-index : 1;
+    .list {
+  max-height: 200px; 
+  overflow-y: scroll !important;
 }
 </style>
--->
 
 <div class="col-lg-12 col-md-12">
                     <div class="register-form" style="display: block;">
                         <h2>Product Details</h2>
                         <body>
-                        <form action = "includes/getProducDetails.inc.php" method="POST" data-parsley-validate="">
-                        <div id="rectangle1"></div>
+                        <form action = "includes/getProducDetails.inc.php" id = "form1" method="POST" data-parsley-validate="">
                             <div class="form-group">
                                 <label>Car brand</label>
                                 <select name = "carbrand" id = "carbrand">
                                 <option value="" selected="selected">Please select a car brand</option>
                                 </select>
                                 <br><br>
-                            </div>
 
-                            <div id="rectangle2"></div>
                             <div class="form-group">
                             <label>Car model</label>
                                 <select name = "carmodel" id = "carmodel">
@@ -60,20 +29,33 @@ include_once "includes/header.inc.php";
                                 <br>
                             </div>
 
-                            <div id="rectangle3"></div>
                             <div class="form-group">
                             <label>Year</label>
-                                <select name = "year" id = "year">
+                                <select  name = "year" id = "year">
                                     <option value="" selected="selected">Please select a car model first</option>
                                 </select>
                                 <br>
-                             </div>
+                            </div>
 
                             <div class="form-group">
                                 <label>Engine Size</label>
                                 <select name = "enginesize" id = "enginesize" required="">
                                 <option value="1.2">1.2</option>
                                 <option value="1.3">1.3</option>
+                                <option value="1.3">1.5</option>
+                                <option value="1.3">1.6</option>
+                                <option value="1.3">1.8</option>
+                                <option value="1.3">2.0</option>
+                                <option value="1.3">2.5</option>
+                                <option value="1.3">2.8</option>
+                                <option value="1.3">3.0</option>
+                                <option value="1.3">3.2</option>
+                                <option value="1.3">3.3</option>
+                                <option value="1.3">3.5</option>
+                                <option value="1.3">3.7</option>
+                                <option value="1.3">3.8</option>
+                                <option value="1.3">3.9</option>
+                                <option value="4.1">1.3</option>
                                 </select>
                                 <br>
                             </div>
