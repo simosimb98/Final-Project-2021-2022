@@ -135,8 +135,48 @@
 
 <?php
 
-if (isset($_POST['updateDetails'])) {
-    if ($_POST['updateDetails'] == 'successfull') {
+if (isset($_GET['item'])) {
+    if ($_GET['item'] == 'allreadyincart') {
+    echo '
+            <script>
+            $(document).ready(function(){
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "This item is allready in your cart!",
+                showConfirmButton: false,
+                timer: 15000                 
+            }).then(function() {
+                window.location="shop.php"
+            })
+            });                 
+            </script>
+                    ';
+    }
+    }
+
+    if (isset($_GET['item'])) {
+        if ($_GET['item'] == 'allreadyinwishlist') {
+        echo '
+                <script>
+                $(document).ready(function(){
+                Swal.fire({
+                    position: "center",
+                    icon: "warning",
+                    title: "This item is allready in your wishlist!",
+                    showConfirmButton: false,
+                    timer: 5000                 
+                }).then(function() {
+                    window.location="shop.php"
+                })
+                });                 
+                </script>
+                        ';
+        }
+        }
+
+if (isset($_GET['updateDetails'])) {
+    if ($_GET['updateDetails'] == 'successfull') {
     echo '
             <script>
             $(document).ready(function(){
@@ -386,8 +426,8 @@ if (isset($_GET['newsletter'])) {
             ';
     }
 }
-if (isset($_POST['mail'])) {
-    if ($_POST['mail'] == 'send') {
+if (isset($_GET['mail'])) {
+    if ($_GET['mail'] == 'send') {
         echo '
             <script>
             $(document).ready(function(){
@@ -407,8 +447,29 @@ if (isset($_POST['mail'])) {
 }
 }
 
-if (isset($_POST['mail'])) {
-if ($_POST['mail'] == 'notSend') {
+if (isset($_GET['mail'])) {
+    if ($_GET['mail'] == 'sendagain') {
+        echo '
+            <script>
+            $(document).ready(function(){
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Thanks for contacting us. We will get back to you as
+                soon as possible!",
+                showConfirmButton: false,
+                timer: 5000                 
+            }).then(function() {
+                window.location = "contactWithAccount.php";
+            })
+            });                 
+            </script>
+            ';
+}
+}
+
+if (isset($_GET['mail'])) {
+if ($_GET['mail'] == 'notSend') {
 echo '
         <script>
         $(document).ready(function(){
@@ -426,8 +487,8 @@ echo '
 }
 }
 
-if (isset($_POST['deletion'])) {
-    if ($_POST['deletion'] == 'successful') {
+if (isset($_GET['deletion'])) {
+    if ($_GET['deletion'] == 'successful') {
     echo '
             <script>
             $(document).ready(function(){
@@ -436,7 +497,7 @@ if (isset($_POST['deletion'])) {
                 icon: "success",
                 title: "Your account has been deleted successfuly!",
                 showConfirmButton: false,
-                timer: 5000                 
+                timer: 51000                 
             }).then(function() {
             })
             });                 
@@ -444,6 +505,26 @@ if (isset($_POST['deletion'])) {
                     ';
     }
     }
+
+    if (isset($_GET['item'])) {
+        if ($_GET['item'] == 'outofstock') {
+        echo '
+                <script>
+                $(document).ready(function(){
+                Swal.fire({
+                    position: "center",
+                    icon: "warning",
+                    title: "This item is currently out of stock!",
+                    showConfirmButton: false,
+                    timer: 51000                 
+                }).then(function() {
+                    window.location="wishlist.php"
+                })
+                });                 
+                </script>
+                        ';
+        }
+        }
 
 ?>
 
@@ -479,4 +560,6 @@ if(isset($_GET['registration'])){
 }
 }
  ?>
+
+
 

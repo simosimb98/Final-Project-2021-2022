@@ -4,6 +4,7 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 $res = preg_replace('/\?[^?]*$/', '', $escaped_url);
 $_SESSION['lastVisitedPage'] = $res;
+
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -59,6 +60,7 @@ $_SESSION['lastVisitedPage'] = $res;
     <link rel="stylesheet" href="assets/css/responsive.css">
     <title>Maxon - Automobile Parts Shop HTML Template</title>
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
+
 </head>
 
 <body>
@@ -134,12 +136,31 @@ $_SESSION['lastVisitedPage'] = $res;
                 </div>
                 <div class="col-lg-6">
                     <ul class="middle-header-optional">
-                        <li>
-                            <a href="wishlist.php"><i class="flaticon-heart"><span>0</span></i> Wishlist</a>
-                        </li>
-                        <li>
-                            <a href="cart.php"><i class="flaticon-shopping-cart"><span>2</span></i> Add to Cart</a>
-                        </li>
+                    <?php
+                    if(isset($_SESSION['wishlist']) && isset($_SESSION['countwishlist'])){
+                        echo '<li class="cart">
+                            <a href="wishlist.php"><i class="flaticon-heart"><span>'.$_SESSION['countwishlist'].'</span></i>Wishlist</a>
+                        </li>';
+                    }else{
+                        echo '<li class="cart">
+                        <a href="wishlist.php"><i class="flaticon-heart"><span>0</span></i>Wishlist</a>
+                    </li>';
+                    }
+                        
+                        ?>
+
+                        <?php
+                    if(isset($_SESSION['cart']) && isset($_SESSION['countcart'])){
+                        echo '<li class="cart">
+                            <a href="cart.php"><i class="flaticon-shopping-cart"><span>'.$_SESSION['countcart'].'</span></i>My Cart</a>
+                        </li>';
+                    }else{
+                        echo '<li class="cart">
+                        <a href="cart.php"><i class="flaticon-shopping-cart"><span>0</span></i>My Cart</a>
+                    </li>';
+                    }
+                        
+                        ?>
                         <?php
                         if(isset($_SESSION['email'])){
                             echo " <li>

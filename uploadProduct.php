@@ -63,34 +63,33 @@ include_once "includes/header.inc.php";
                             <div class="form-group">
                                 <label>Category</label>
                                 <select name = "category" id = "category" required="">
-                                <option value="oilsandfluids">Oils and fluids</option>
-                                <option value="brakesystem">Brake System</option>
-                                <option value="filters">Filters</option>
-                                <option value="engine">Engine</option>
-                                <option value="windscreencleaningsystem">Windscreen cleaning system</option>
+                                <option value="Oils and Fluids">Oils and fluids</option>
+                                <option value="Brake System">Brake System</option>
+                                <option value="Filters">Filters</option>
+                                <option value="Engine">Engine</option>
+                                <option value="Windscreen cleaning system">Windscreen cleaning system</option>
                                 <option value="Ingnition and Glowplug System">Brake System</option>
-                                <option value="suspensionandarms">Suspension and Arms</option>
-                                <option value="electrics">Electrics</option>
-                                <option value="damping">Damping</option>
-                                <option value="beltschainsrollers">Belts, Chains, Rollers</option>
-                                <option value="body">Body</option>
-                                <option value="heater">Heater</option>
-                                <option value="gasketsandsealingrings">Gaskets and Sealing Rings</option>
-                                <option value="exhaustsystem">Exhaust System</option>
-                                <option value="interiorandcomfort">Interior and Comfort</option>
-                                <option value="fuelsupplysystem">Fuel Supply System</option>
-                                <option value="steering">Steering</option>
-                                <option value="clutchparts">Clutch/Parts</option>
-                                <option value="transmission">Transmission</option>
-                                <option value="airconditioning">Air Conditioning</option>
-                                <option value="bearings">Bearings</option>
-                                <option value="propshaftanddifferentials">Propshafts and Differentials</option>
-                                <option value="towbarparts">Towbar/Parts</option>
-                                <option value="sensorrelayscus">Towbar/Parts</option>
-                                <option value="sensorrelayscus">Sensors, Relays, Control units</option>
-                                <option value="repairkits">Repair Kits</option>
-                                <option value="pipesandhoses">Pipes and Hoses</option>
-                                <option value="accessories">Accessories</option>
+                                <option value="Suspension and arms">Suspension and Arms</option>
+                                <option value="Electrics">Electrics</option>
+                                <option value="Damping">Damping</option>
+                                <option value="Belts chains rollers">Belts, Chains, Rollers</option>
+                                <option value="Body">Body</option>
+                                <option value="Heater">Heater</option>
+                                <option value="Gaskets and sealing rings">Gaskets and Sealing Rings</option>
+                                <option value="Exhaust system">Exhaust System</option>
+                                <option value="Interior and Comfort">Interior and Comfort</option>
+                                <option value="Fuel supply system">Fuel Supply System</option>
+                                <option value="Steering">Steering</option>
+                                <option value="Clutch parts">Clutch/Parts</option>
+                                <option value="Transmission">Transmission</option>
+                                <option value="Air Conditioning">Air Conditioning</option>
+                                <option value="Bearings">Bearings</option>
+                                <option value="Propshafts and Differentials">Propshafts and Differentials</option>
+                                <option value="Towbar parts">Towbar/Parts</option>
+                                <option value="Sensors Relays Control Units">Sensors, Relays, Control units</option>
+                                <option value="Repair kits">Repair Kits</option>
+                                <option value="Pipes and Hoses">Pipes and Hoses</option>
+                                <option value="Accessories">Accessories</option>
                                 </select>
                                 <br>
                             </div>
