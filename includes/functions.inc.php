@@ -116,7 +116,7 @@ function sendEmailPlainUser($emailFrom, $subject, $message)
 function addContactUsInquiry($conn, $name, $surname, $emailFrom, $phone, $subject, $message)
 {
 
-    $sql = 'INSERT INTO contactlist(name,surname,email,phone,subject,message) VALUES (?,?,?,?,?,?); ';
+    $sql = 'INSERT INTO contactlist(name,surname,email,phone,subject,message,datesent) VALUES (?,?,?,?,?,?,NOW());';
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {

@@ -1,6 +1,19 @@
 <?php
 include_once "includes/header.inc.php";
+require_once 'includes/capdb.inc.php';
+$partID = $_GET['id'];
+
 ?>
+<script>
+    $(document).ready(function () {
+        $('.carousel-item').first().addClass('active')});
+</script>
+<style>
+    .carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+</style>
     <div class="page-banner-area item-bg3">
         <div class="d-table">
             <div class="d-table-cell">
@@ -19,67 +32,118 @@ include_once "includes/header.inc.php";
         </div>
     </div>
 
-
     <section class="products-details-area ptb-100">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-12">
+                <div class="col-lg-12 col-md-12">
                     <div class="products-details-desc">
                         <div class="row align-items-center">
                             <div class="col-lg-7 col-md-6">
                                 <div class="main-products-image">
-                                    <img src="assets/img/products/products-8.jpg" alt="image">
+                                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                     <?php
+                                        $sql1 = "SELECT * FROM carpartsmultimedia WHERE carpartID = $partID;";
+                                        $result1 = mysqli_query($conn, $sql1);
+                                        $resultCheck1 = mysqli_num_rows($result1);
+
+                                        while($row1 = mysqli_fetch_assoc($result1)){
+                                        ?>
+                                        <div class="carousel-item">
+                                        <img class="d-block w-100" src="<?php echo $row1['photo']; ?>">
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                    </div>     
                                 </div>
                             </div>
+                            <?php
+                                //$sql = "SELECT * FROM partsdetails WHERE carpartID = $partID;";
+                               $sql = "SELECT * FROM partsdetails pd
+                                        INNER JOIN carpartsmultimedia pc
+                                        ON pd.carpartID = pc.carpartID
+                                        WHERE pd.carpartID = $partID LIMIT 1;";
+
+                                $result = mysqli_query($conn, $sql);
+                                $resultCheck = mysqli_num_rows($result);
+                                
+                                while($row = mysqli_fetch_assoc($result)){
+
+                            ?>
                             <div class="col-lg-5 col-md-6">
                                 <div class="product-content">
-                                    <h3>Wheel</h3>
+                                    <h3><?php echo $row['productname'];?></h3>
                                     <div class="product-review">
-                                        <div class="rating">
+                                      <!--  <div class="rating">
                                             <i class='bx bxs-star'></i>
                                             <i class='bx bxs-star'></i>
                                             <i class='bx bxs-star'></i>
                                             <i class='bx bxs-star'></i>
                                             <i class='bx bxs-star'></i>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="price">
-                                        <span class="old-price">$150.00</span>
-                                        <span class="new-price">$75.00</span>
+                                       <!-- <span class="old-price">$150.00</span> -->
+                                        <span class="new-price">Price: €<?php echo $row['price'];?></span>
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor.</p>
                                     <ul class="products-info">
-                                        <li><span>Availability:</span> <a href="#">In stock</a></li>
-                                        <li><span>SKU:</span> <a href="#">L458-25</a></li>
+                                    <li><span>Shipping: </span>€<?php echo $row['shippingcost'];?></li>
+                                        <?php
+                                        if($row['quantity'] != 0){
+                                        ?>
+                                        <li style = "color: blue;"><span>Availability:</span> IN STOCK</li>
+                                        <?php
+                                        }else{
+                                        ?>
+                                        <li style = "color: red;"><span>Availability:</span> OUT OF STOCK</li>
+                                        <?php
+                                        }
+                                        ?>
+                                        <li><span>Category: </span><?php echo $row['category'];?></li>
+                                        <li><span>Car Brand: </span><?php echo $row['car_brand'];?></li>
+                                        <li><span>Car Model: </span><?php echo $row['car_model'];?></li>
+                                        <li><span>Engine Size: </span><?php echo $row['engine_size'];?></li>
+                                        <li><span>Engine Size: </span><?php echo $row['year'];?></li>
                                     </ul>
-                                    <div class="products-color-switch">
-                                        <p class="available-color"><span>Color</span> :
-                                            <a href="#" style="background: #a53c43;"></a>
-                                            <a href="#" style="background: #192861;"></a>
-                                            <a href="#" style="background: #c58a84;"></a>
-                                            <a href="#" style="background: #ecc305;"></a>
-                                            <a href="#" style="background: #000000;"></a>
-                                            <a href="#" style="background: #808080;"></a>
-                                        </p>
-                                    </div>
                                     <div class="product-quantities">
-                                        <span>Quantities:</span>
-                                        <div class="input-counter">
-                                            <span class="minus-btn">
-                                                <i class='bx bx-minus'></i>
-                                            </span>
-                                            <input type="text" value="1">
-                                            <span class="plus-btn">
-                                                <i class='bx bx-plus'></i>
-                                            </span>
-                                        </div>
+                                        <span>Stock Left: <?php echo $row['quantity']?></span>
                                     </div>
                                     <div class="product-add-to-cart">
-                                        <button type="submit" class="default-btn">
-                                            <i class="flaticon-shopping-cart"></i>
-                                            Add to cart
-                                            <span></span>
-                                        </button>
+                                  <form action = "includes/addToCart.inc.php?action=add&id=<?php echo $row['carpartID']; ?>&quantity=<?php echo $row['quantity'];?>" method="POST">
+                                  <input type = "hidden" name ="prname_shop" class = "btn btn-outline-danger" value ="<?php echo $row['productname'];?>" />
+                                  <input type = "hidden" name ="photo_shop" class = "btn btn-outline-danger" value ="<?php echo $row['photo'];?>" />
+                                  <input type = "hidden" name ="price_shop" class = "btn btn-outline-danger" value ="<?php echo $row['price'];?>" />
+                                  <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value ="<?php echo $row['shippingcost'];?>" />
+
+                                  <?php
+                                  if($row['quantity'] == 0){
+                                  ?>
+                                    <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 200px;">Add to Cart 
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                                    </svg></a>
+                                    <?php
+                                  }else{
+                                    ?>
+                                    <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 200px;">Add to Cart
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                                        </svg>
+                                       </button>
+                                       <?php
+                                          }
+                                       ?>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -88,510 +152,50 @@ include_once "includes/header.inc.php";
                     <div class="products-details-tabs">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item"><a class="nav-link active" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description">Description</a></li>
-                            <li class="nav-item"><a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a></li>
+                           <!-- <li class="nav-item"><a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews">Reviews</a></li> -->
                             <li class="nav-item"><a class="nav-link" id="information-tab" data-bs-toggle="tab" href="#information" role="tab" aria-controls="information">Shipping Information</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="description" role="tabpanel">
                                 <h2>Overview</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea com modo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea com modo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur.</p>
-                                <ul>
-                                    <li>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</li>
-                                    <li>Contrary to popular belief, Lorem Ipsum is not simply random text.</li>
-                                    <li>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</li>
-                                    <li>Various versions have evolved over the years, sometimes by accident sometimes on purpose.</li>
-                                    <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore fugiat nulla pariatur.</li>
-                                </ul>
+                                <p><?php echo $row['description']; ?></p>
                             </div>
-                            <div class="tab-pane fade" id="reviews" role="tabpanel">
-                                <div class="products-reviews">
-                                    <h3>Reviews</h3>
-                                    <div class="row">
-                                        <div class="side">
-                                            <div>5 star</div>
-                                        </div>
-                                        <div class="middle">
-                                            <div class="bar-container">
-                                                <div class="bar-5"></div>
-                                            </div>
-                                        </div>
-                                        <div class="side right">
-                                            <div>70%</div>
-                                        </div>
-                                        <div class="side">
-                                            <div>4 star</div>
-                                        </div>
-                                        <div class="middle">
-                                            <div class="bar-container">
-                                                <div class="bar-4"></div>
-                                            </div>
-                                        </div>
-                                        <div class="side right">
-                                            <div>20%</div>
-                                        </div>
-                                        <div class="side">
-                                            <div>3 star</div>
-                                        </div>
-                                        <div class="middle">
-                                            <div class="bar-container">
-                                                <div class="bar-3"></div>
-                                            </div>
-                                        </div>
-                                        <div class="side right">
-                                            <div>5%</div>
-                                        </div>
-                                        <div class="side">
-                                            <div>2 star</div>
-                                        </div>
-                                        <div class="middle">
-                                            <div class="bar-container">
-                                                <div class="bar-2"></div>
-                                            </div>
-                                        </div>
-                                        <div class="side right">
-                                            <div>3%</div>
-                                        </div>
-                                        <div class="side">
-                                            <div>1 star</div>
-                                        </div>
-                                        <div class="middle">
-                                            <div class="bar-container">
-                                                <div class="bar-1"></div>
-                                            </div>
-                                        </div>
-                                        <div class="side right">
-                                            <div>2%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="products-review-form">
-                                    <h3>Customer Reviews</h3>
-                                    <div class="review-title">
-                                        <div class="rating">
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                            <i class='bx bxs-star'></i>
-                                        </div>
-                                        <a href="#" class="default-btn">
-                                            Write a Review
-                                            <span></span>
-                                        </a>
-                                    </div>
-                                    <div class="review-comments">
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-                                        <div class="review-item">
-                                            <div class="rating">
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                                <i class='bx bxs-star'></i>
-                                            </div>
-                                            <h3>Good</h3>
-                                            <span><strong>Admin</strong> on <strong>Sep 21, 2019</strong></span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                                        </div>
-                                    </div>
-                                    <div class="review-form">
-                                        <h3>Write a Review</h3>
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text" id="name" name="name" placeholder="Enter your name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <input type="text" id="review-title" name="review-title" placeholder="Enter your review a title" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <textarea name="review-body" id="review-body" cols="30" rows="6" placeholder="Write your comments here" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12">
-                                                    <button type="submit" class="default-btn">
-                                                        Submit Review
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            /*$sql3 = mysqli_query($conn,"SELECT userID FROM partsdetails WHERE carpartID = $partID;");
+                            $row3 = mysqli_fetch_assoc($sql3);*/
+
+                            $sql4 = "SELECT country,city,phone,email,shop FROM users
+                                     NATURAL JOIN shops
+                                     WHERE users.userID = ".$row['userID'].";";
+                            $result4 = mysqli_query($conn, $sql4);
+
+                            while($row4 = mysqli_fetch_assoc($result4)){
+                            ?>
                             <div class="tab-pane fade show" id="information" role="tabpanel">
                                 <ul class="information-list">
-                                    <li>Address: <span>4848 Hershell Hollow Road, Bothell, WA 89076</span></li>
-                                    <li>Phone: <a href="tel:+15143214567">+1 (514) 321-4567</a></li>
-                                    <li>Email: <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#6a020f0606052a070b12050444090507"><span class="__cf_email__" data-cfemail="87efe2ebebe8c7eae6ffe8e9a9e4e8ea">[email&#160;protected]</span></a></li>
+                                    <li>Shop: <span><?php echo $row4['shop']; ?></span></li>
+                                    <li>Shipping From: <span><?php echo $row4['country'];?>, <?php echo $row4['city'];?></span></li>
+                                    <li>Phone: <span><?php echo $row4['phone'];?></span></li>
+                                    <li>Email: <span><?php echo $row4['email'];?></span></li>
                                 </ul>
                             </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <aside class="widget-area">
-                        <section class="widget widget_search">
-                            <h3 class="widget-title">Search</h3>
-                            <form class="search-form">
-                                <label>
-                                    <span class="screen-reader-text">Search for:</span>
-                                    <input type="search" class="search-field" placeholder="Search...">
-                                </label>
-                                <button type="submit">
-                                    <i class='bx bx-search-alt'></i>
-                                </button>
-                            </form>
-                        </section>
-                        <section class="widget widget_categories">
-                            <h3 class="widget-title">Categories</h3>
-                            <ul>
-                                <li>
-                                    <a href="#">Wheels and Tires <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Repair Parts <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Diversion <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Electronics <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Accessories <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Brake Rotors <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Pistons Liners <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                                <li>
-                                    <a href="#">Door Handles <i class='bx bx-chevron-right'></i></a>
-                                </li>
-                            </ul>
-                        </section>
-                        <section class="widget widget_maxon_posts_thumb">
-                            <h3 class="widget-title">Popular Posts</h3>
-                            <article class="item">
-                                <a href="#" class="thumb">
-                                    <span class="fullimage cover bg1" role="img"></span>
-                                </a>
-                                <div class="info">
-                                    <span>June 10, 2021</span>
-                                    <h4 class="title usmall"><a href="#">The Electric Car isn't Pollution-free they have to get there</a></h4>
-                                </div>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="thumb">
-                                    <span class="fullimage cover bg2" role="img"></span>
-                                </a>
-                                <div class="info">
-                                    <span>June 21, 2021</span>
-                                    <h4 class="title usmall"><a href="#">You Can Know That How a Car Runs a Still, Enjoy Trip</a></h4>
-                                </div>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="thumb">
-                                    <span class="fullimage cover bg3" role="img"></span>
-                                </a>
-                                <div class="info">
-                                    <span>June 30, 2021</span>
-                                    <h4 class="title usmall"><a href="#">What Is The Cost Of Repairing a Scratch On a Car?</a></h4>
-                                </div>
-                            </article>
-                        </section>
                     </aside>
                 </div>
             </div>
         </div>
     </section>
+    <?php
+    }
+    ?>
 
-
-    <section class="top-products-area bg-color pt-100 pb-70">
-        <div class="container">
-            <div class="section-title">
-                <h2>Top Products</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-1.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.html">17 Inch Rim</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$89.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-2.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.php"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.php">Motor Oil</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$99.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-3.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.html">Wheel</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$55.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-4.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.html">Motor</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$79.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-5.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.html">Camera</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$59.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-6.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.html">Car Engine</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$99.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.php"><img src="assets/img/top-products/top-products-7.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.php">Ispat Rim</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-top-products-box">
-                        <div class="top-products-image">
-                            <a href="products-details.html"><img src="assets/img/top-products/top-products-8.jpg" alt="image"></a>
-                            <ul class="top-products-action">
-                                <li>
-                                    <a href="cart.html">
-                                        <i class="flaticon-shopping-cart"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="wishlist.html"><i class="flaticon-heart"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="top-products-content">
-                            <h3>
-                                <a href="products-details.php">HD Camera</a>
-                            </h3>
-                            <ul class="rating">
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bxs-star'></i></li>
-                                <li><i class='bx bx-star'></i></li>
-                            </ul>
-                            <span>$39.00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 <?php
 include_once "includes/footer.inc.php";

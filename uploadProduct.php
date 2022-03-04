@@ -104,7 +104,11 @@ include_once "includes/header.inc.php";
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" data-parsley-required-message="Please enter the price of the product" name = "price" class="form-control" placeholder="Price" data-parsley-length="[1, 10000]" required="">
+                                <input type="text" data-parsley-required-message="Please enter the price of the product" name = "price" class="form-control" placeholder="eg: 10.5 or 10.00" data-parsley-pattern="^\d+(.\d+)?$" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Shipping cost</label>
+                                <input type="text" data-parsley-required-message="Please enter a shipping cost" name = "shipping" class="form-control" placeholder="eg: 10.5 or 10.00" data-parsley-pattern="^\d+(.\d+)?$" required="">
                             </div>
 
                             <div class="form-group">
@@ -118,7 +122,6 @@ include_once "includes/header.inc.php";
                             </div>
                         </form>
                         <script type = "text/javascript" src = "assets/js/carSelection.inc.js"></script>
-
                         </body>
                 </div>
             </div>

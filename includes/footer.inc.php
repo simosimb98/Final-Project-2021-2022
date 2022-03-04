@@ -1,7 +1,5 @@
 <section class="footer-area pt-100 pb-70">
     <div class="container">
-
-
         <div class="row">
             <div class="col-lg-3 col-sm-6">
                 <div class="single-footer-widget">
@@ -10,17 +8,17 @@
                     </a>
                     <ul class="footer-social">
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="https://www.facebook.com/Simos1598" target="_blank">
                                 <i class='bx bxl-facebook'></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="https://twitter.com/?lang=en" target="_blank">
                                 <i class='bx bxl-twitter'></i>
                             </a>
                         </li>
                         <li>
-                            <a href="#" target="_blank">
+                            <a href="https://www.instagram.com/simos_imb/" target="_blank">
                                 <i class='bx bxl-instagram'></i>
                             </a>
                         </li>
@@ -67,7 +65,7 @@
 
 </section>
 
-
+<footer>
 <div class="copyright-area">
     <div class="container">
         <div class="copyright-area-content">
@@ -83,10 +81,10 @@
                 <div class="col-lg-6 col-md-6">
                     <ul>
                         <li>
-                            <a href="terms-of-service.html">Terms & Conditions</a>
+                            <a data-toggle='modal' href='#termsOfService'>Terms & Conditions</a>
                         </li>
                         <li>
-                            <a href="privacy-policy.html">Privacy Policy</a>
+                            <a data-toggle='modal' href='#privacyPolicy'>Privacy Policy</a>
                         </li>
                     </ul>
                 </div>
@@ -95,16 +93,43 @@
     </div>
 </div>
 
+<div id="privacyPolicy" class="modal fade">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content ">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <?php include_once 'privacy.html' ?>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-a" data-dismiss="modal" value="OK">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms of service Modal HTML -->
+  <div id="termsOfService" class="modal fade">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <?php include_once 'terms.html' ?>
+          <div class="modal-footer">
+            <input type="button" class="btn btn-a" data-dismiss="modal" value="Ok">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
 <div class="go-top">
     <i class='bx bx-up-arrow-alt'></i>
 </div>
-
-
-<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
-
-<script src="assets/js/popper.min.js"></script>
-
 <script src="assets/js/bootstrap.min.js"></script>
 
 <script src="assets/js/jquery.meanmenu.js"></script>
@@ -131,7 +156,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
 
-</body>
 
 <?php
 
@@ -286,6 +310,7 @@ if (isset($_GET['error'])) {
                 showConfirmButton: false,
                 timer: 1600                 
             }).then(function() {
+                window.history.back();
             })
             });                 
             </script>
@@ -507,7 +532,7 @@ if (isset($_GET['deletion'])) {
     }
 
     if (isset($_GET['item'])) {
-        if ($_GET['item'] == 'outofstock') {
+        if ($_GET['item'] == 'outoFstock') {
         echo '
                 <script>
                 $(document).ready(function(){
@@ -518,7 +543,7 @@ if (isset($_GET['deletion'])) {
                     showConfirmButton: false,
                     timer: 51000                 
                 }).then(function() {
-                    window.location="wishlist.php"
+                    window.location="shop.php"
                 })
                 });                 
                 </script>
@@ -526,11 +551,31 @@ if (isset($_GET['deletion'])) {
         }
         }
 
+        if (isset($_GET['partdeletion'])) {
+            if ($_GET['partdeletion'] == 'success') {
+            echo '
+                    <script>
+                    $(document).ready(function(){
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Item has been deleted!",
+                        showConfirmButton: false,
+                        timer: 51000                 
+                    }).then(function() {
+                        window.location="editProducts.php"
+                    })
+                    });                 
+                    </script>
+                            ';
+            }
+            }
+
 ?>
 
-<!-- Mirrored from templates.hibootstrap.com/maxon/default/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Jul 2021 15:06:53 GMT -->
 
-</html>
+<!-- Mirrored from templates.hibootstrap.com/maxon/default/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Jul 2021 15:06:53 GMT -->
+<!-- Bootstrap core JavaScript-->
 
 <!--Script to show login modal when form is submitted-->
 <?php if (isset($_GET['modal']) && 'loginuser' == $_GET['modal']) { ?>
@@ -546,20 +591,16 @@ if (isset($_GET['deletion'])) {
     </script>
 <?php } ?>
 
-<!--Script to show shops modal when form is submitted-->
-<?php 
-if(isset($_GET['registration'])){
-    if ($_GET['registration'] == 'shop'){
- ?>
+<!--Script to show edit products modal when form is submitted-->
+<?php if (isset($_GET['modal']) && 'editProducts' == $_GET['modal']) { ?>
     <script type='text/javascript'>
-         if (window.location.hash == "shop") {
-        $("#shops").modal("show");
-    }
+        $("#editProducts").modal();
     </script>
-<?php 
-}
-}
- ?>
+<?php } ?>
 
-
-
+<!--Script to show delete product modal when form is submitted-->
+<?php if (isset($_GET['modal']) && ('deleteProduct' == $_GET['modal'])) { ?>
+    <script type='text/javascript'>
+        $("#deleteProduct").modal();
+    </script>
+<?php } ?>

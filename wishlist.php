@@ -61,12 +61,12 @@ include_once "includes/header.inc.php";
                              </a>
                             </td>
                             <td class="product-thumbnail">
-                                <a href="#">
+                                <a href="products-details.php?id=<?php echo $values['part_id']; ?>">
                                     <img src=<?php echo $values['part_photo'];?> alt="item" class="img-new">
                                 </a>
                             </td>
                             <td class="product-name">
-                                <a href="products-details.html"><?php echo $values['part_name'];?></a>
+                                <a href="products-details.php?id=<?php echo $values['part_id']; ?>"><?php echo $values['part_name'];?></a>
                             </td>
                             <td class="product-price">
                                 <span class="unit-amount">€<?php echo $values['part_price'];?></span>
@@ -76,8 +76,12 @@ include_once "includes/header.inc.php";
                             echo '<td class="product-stock">
                                 <span class="stock">In Stock</span>
                             </td>
-                            <form action="includes/cart.php" method="POST">
+                            <form action="includes/addToCart.inc.php?id='.$values['part_id'].'&quantity='.$row['quantity'].'" method="POST">
                             <td class="product-btn">
+                                <input type = "hidden" name ="prname_shop" value = "'.$values['part_name'].'"/>
+                                <input type = "hidden" name ="photo_shop" value = "'.$values['part_photo'].'"/>
+                                <input type = "hidden" name ="price_shop" value = "'.$values['part_price'].'"/>
+                                <input type = "hidden" name ="shipping_shop" value = "'.$values['part_shipping'].'"/>
                             <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 152px;">Add to Cart
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
                             <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>

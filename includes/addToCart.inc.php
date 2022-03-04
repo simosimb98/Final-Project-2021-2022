@@ -17,6 +17,7 @@ if(isset($_POST['addToCart'])){
         'part_name' => $_POST['prname_shop'],
         'part_photo' => $_POST['photo_shop'],
         'part_price' => $_POST['price_shop'],
+        'part_shipping' => $_POST['shipping_shop'],
         'part_quantity' => $_GET["quantity"]
 
       );
@@ -35,6 +36,7 @@ if(isset($_POST['addToCart'])){
     'part_name' => $_POST['prname_shop'],
     'part_photo' => $_POST['photo_shop'],
     'part_price' => $_POST['price_shop'],
+    'part_shipping' => $_POST['shipping_shop'],
     'part_quantity' => $_GET["quantity"]
 
   );
@@ -62,7 +64,10 @@ else if(isset($_POST['addToWishlist'])){
         'part_id' => $_GET["id"],
         'part_name' => $_POST['prname_shop'],
         'part_photo' => $_POST['photo_shop'],
-        'part_price' => $_POST['price_shop']
+        'part_price' => $_POST['price_shop'],
+        'part_shipping' => $_POST['shipping_shop'],
+        'part_quantity' => $_GET["quantity"]
+
 
       );
       $_SESSION['wishlist'][$count] = $item_array;
@@ -79,7 +84,9 @@ else if(isset($_POST['addToWishlist'])){
     'part_id' => $_GET["id"],
     'part_name' => $_POST['prname_shop'],
     'part_photo' => $_POST['photo_shop'],
-    'part_price' => $_POST['price_shop']
+    'part_price' => $_POST['price_shop'],
+    'part_shipping' => $_POST['shipping_shop'],
+    'part_quantity' => $_GET["quantity"]
 
   );
 
@@ -91,6 +98,24 @@ else if(isset($_POST['addToWishlist'])){
 
  header('Location: ../shop.php');
  exit();  
+}
+
+if(isset($_POST['modQuantity'])){
+
+  foreach($_SESSION['cart'] as $keys => $values){
+
+      if($values['part_id'] == $_POST['part_id']){
+
+          $_SESSION['cart'][$keys]['part_quantity'] = $_POST['modQuantity'];
+          
+          echo "<script>
+          window.history.back();
+          </script>";
+
+      }
+     
+  }
+
 }
 
 

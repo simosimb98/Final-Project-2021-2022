@@ -51,30 +51,27 @@ include_once "includes/header.inc.php";
                                         <td class="product-thumbnail">
                                             <a href="includes/removeFromCart.inc.php?action=delete&id=<?php echo $values['part_id'];?>" class="remove"><i class="bx bx-x"></i></a>
                                             <input type = "hidden" name ="partID" class = "btn btn-outline-danger" value = "<?php echo $values['part_id'];?>">
-                                            <a href="#">
+                                            <a href="products-details.php?id=<?php echo $values['part_id']; ?>">
                                                <img src= <?php echo $values['part_photo'];?> alt="item">
                                             </a>
                                         </td>
                                         <td class="product-name">
-                                            <a href="products-details.html"><?php echo $values['part_name'];?></a>
+                                            <a href="products-details.php?id=<?php echo $values['part_id']; ?>"><?php echo $values['part_name'];?></a>
                                         </td>
                                         <td class="product-price">
                                             <span class="unit-amount">€<?php echo $values['part_price'];?></span>
-                                            <input type ="hidden" class="iprice" value="<?php echo $values['part_price'];?>">
+                                            <br>
+                                            <span style="font-size:smaller; font:small-caps">+ €<?php echo $values['part_shipping'];?></span>
+                                            <input type ="hidden" class="iprice" value="<?php echo $values['part_price']?>" />
+                                            <input type ="hidden" class="ishipping" value="<?php echo $values['part_shipping'];?>" />
                                         </td>
+                                   </form>
                                         <td class="product-quantity">
-                                            <div class="input-counter" >
-                                                <?php
-                                                $partID = $values['part_id'];
-
-                                                $sql = "SELECT quantity FROM partsdetails WHERE carpartID = $partID;";
-                                                $result = mysqli_query($conn, $sql);
-                                                $resultCheck = mysqli_num_rows($result);
-
-                                                $row = mysqli_fetch_assoc($result);
-                                                ?>
-                                                <input type="number" onchange = "this.form.submit();" class = "iquantity" name ="modQuantity" value="<?php echo $values['part_quantity'];?>" min="1" max="<?php echo $row['quantity'];?>">
-                                                <input type = "hidden" name ="part_name" class = "btn btn-outline-danger" value = "<?php echo $values['part_name'];?>">
+                                            <div class="input-counter" > 
+                                            <form action="includes/addToCart.inc.php" method ="POST"> 
+                                                <input type="number" onchange = "this.form.submit();" class = "iquantity" name ="modQuantity" value="<?php echo $values['part_quantity']?>" min="1" max="10">
+                                                <input type = "hidden" name ="part_id" class = "btn btn-outline-danger" value = "<?php echo $values['part_id'];?>"/>
+                                              </form>
                                             </div>
                     
                                         </td>
@@ -100,13 +97,14 @@ include_once "includes/header.inc.php";
                     <div class="cart-totals">
                         <h3>Cart Totals</h3>
                         <ul>
-                            <li>Shipping <span>€30.00</span></li>
-                            <li>Payable Total</li><li style="margin-left: 245px;">€<span id ="gtotal"></li>
-                            
+                        <li>Cart Items: <?php echo $_SESSION['countcart'];?></li>
+                        <li>Payable Total (+shipping):</li><li>€<span id ="gtotal"></span></li>
                         </ul>
+                        <form action="includes/purchase.inc.php" method="POST">
                         <button type = "submit" name = "checkout" class="default-btn">
                             Proceed to Checkout
                     </button>
+                        </form>
                     </div>
                 </div>
                 </form>
@@ -136,6 +134,7 @@ include_once "includes/footer.inc.php";
 
     var gt = 0;
     var iprice = document.getElementsByClassName('iprice');
+    var ishipping = document.getElementsByClassName('ishipping');
     var iquantity = document.getElementsByClassName('iquantity');
     var itotal = document.getElementsByClassName('itotal');
     var gtotal = document.getElementById('gtotal');
@@ -145,12 +144,15 @@ include_once "includes/footer.inc.php";
         gt = 0;
         for(i=0; i<iprice.length; i++){
 
-            itotal[i].innerText = (iprice[i].value) * (iquantity[i].value);
-            gt = gt+(iprice[i].value) * (iquantity[i].value);
 
+            itotal[i].innerText = Number.parseFloat(((iprice[i].value) * (iquantity[i].value)) + Number.parseFloat(ishipping[i].value)).toFixed(2);
+            
+            gt = (gt + (iprice[i].value) * (iquantity[i].value) + Number.parseFloat(ishipping[i].value));
 
         }
-        gtotal.innerText=gt + 30;
+
+        gtotal.innerText= Number.parseFloat(gt).toFixed(2);
+
 
     }
     subTotal();

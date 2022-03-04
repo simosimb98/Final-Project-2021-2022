@@ -4,7 +4,6 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 $res = preg_replace('/\?[^?]*$/', '', $escaped_url);
 $_SESSION['lastVisitedPage'] = $res;
-
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -12,6 +11,7 @@ $_SESSION['lastVisitedPage'] = $res;
 <!-- Mirrored from templates.hibootstrap.com/maxon/default/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Jul 2021 15:05:52 GMT -->
 
 <head>
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,7 +21,7 @@ $_SESSION['lastVisitedPage'] = $res;
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    
     <link rel="stylesheet" href="assets/css/animate.min.css">
 
     <link rel="stylesheet" href="assets/css/meanmenu.css">
@@ -44,7 +44,11 @@ $_SESSION['lastVisitedPage'] = $res;
 
     <link rel="stylesheet" href="assets/css/style.css"> 
 
-    <link rel="stylesheet" href="assets/css/myaccount_dropdown.css">   
+    <link rel="stylesheet" href="assets/css/myaccount_dropdown.css"> 
+    
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -61,13 +65,22 @@ $_SESSION['lastVisitedPage'] = $res;
     <title>Maxon - Automobile Parts Shop HTML Template</title>
     <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
+    <script type="text/javascript">
+        function searchq(){
+            var searchTxt = $("input[name='search']").val();
+
+            $.post("includes/search.inc.php", {searchVal: searchTxt}, function(output){
+                $("#output").html(output);
+            });
+        }
+    </script>
+    
 </head>
 
 <body>
-
     <div class="preloader">
         <div class="loader">
-            <div class="sbl-half-circle-spin">
+            <div class="sbl-h alf-circle-spin">
                 <div></div>
             </div>
         </div>
@@ -116,23 +129,25 @@ $_SESSION['lastVisitedPage'] = $res;
             </div>
         </div>
     </div>
-
-
+    
     <div class="middle-header-area">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="middle-header-search">
-                        <form class="search-form">
+                        <form action="" method="POST" class="search-form">
                             <label>
                                 <span class="screen-reader-text">Search for:</span>
-                                <input type="search" class="search-field" placeholder="Search the entire store here">
+                                <input style="width: 350px;" type="text" name="search" class="search-field" placeholder="Search the entire store here" onkeydown="searchq();"/>
                             </label>
-                            <button type="submit">
+                           <!-- <button style="margin-right: 190px;" type="submit">
                                 <i class='bx bx-search-alt'></i>
-                            </button>
+                            </button> -->
                         </form>
-                    </div>
+                        <div class="dropdown" id ="output" style="position: absolute; z-index: 3;">
+
+                        </div>
+                  </div>
                 </div>
                 <div class="col-lg-6">
                     <ul class="middle-header-optional">
@@ -159,20 +174,57 @@ $_SESSION['lastVisitedPage'] = $res;
                         <a href="cart.php"><i class="flaticon-shopping-cart"><span>0</span></i>My Cart</a>
                     </li>';
                     }
+                    ?>
+                    <?php
+                    if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) ){
+
+                    include_once 'includes/capdb.inc.php';
+                    $uID = $_SESSION['userID'];
                         
+                       $sql = "SELECT *
+                               FROM orders AS a
+                               INNER JOIN orders_products AS b ON a.orderID = b.orderID
+                               INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
+                               WHERE c.userID = $uID AND a.orderstatus=0;";
+
+                               $result = mysqli_query($conn, $sql);
+                               $resultCheck = mysqli_num_rows($result);
+                    ?>
+                    <li class="cart">
+                        <a href="orders.php"><i class="flaticon-online-payment"><span><?php echo $resultCheck;?></span></i>Orders</a>
+                    </li>
+
+                    <?php
+                    }
                         ?>
                         <?php
-                        if(isset($_SESSION['email'])){
+                        if(isset($_SESSION['role']) && ($_SESSION['role'] == 1 || $_SESSION['role'] == 4)){
                             echo " <li>
-                            <div class='dropdown'>
-                                <button class='user-btn'>";?> <?php echo $_SESSION['name'] . ' ' . $_SESSION['surname']?><?php echo "</button>
-                                <div class='dropdown-content'>
-                                    <a href='includes/logout.inc.php'>Logout</a>
-                                    <a href='editProfile.php'>Edit profile</a>
+                            <div class='dropdown' style='position: relative; z-index: 2;'>
+                                <button class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";?><?php echo $_SESSION['name'] . ' ' . $_SESSION['surname'];?><?php echo "</button>
+                                <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+                                    <a class='dropdown-item' href='includes/logout.inc.php'>Logout</a>
+                                    <a class='dropdown-item' href='editProfile.php'>Edit profile</a>
+                                    <a class='dropdown-item' href='transactionHistory.php'>Transaction History</a>
                                 </div>
-                                </div> 
+                                </div>
+
                         </li>";
-                        }else{
+                        }else if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3)){
+                            echo " <li>
+                            <div class='dropdown' style='position: relative; z-index: 2;'>
+                                <button class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";?><?php echo $_SESSION['name'] . ' ' . $_SESSION['surname'];?><?php echo "</button>
+                                <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+                                    <a class='dropdown-item' href='includes/logout.inc.php'>Logout</a>
+                                    <a class='dropdown-item' href='editProfile.php'>Edit profile</a>
+                                    <a class='dropdown-item' href='editProducts.php'>Edit products</a>
+                                    <a class='dropdown-item' href='transactionHistory.php'>Transaction History</a>
+                                </div>
+                                </div>
+
+                        </li>";
+                        }
+                        else{
                             echo " <li>
                             <a data-toggle='modal' href='#loginuser' class='user-btn'><i class='flaticon-enter'></i>Login /
                                 Register</a>
@@ -422,39 +474,4 @@ $_SESSION['lastVisitedPage'] = $res;
        </div>
     </div>
 </div>
-
-<!-- Shops Modal HTML -->
-<div id="shops" class="modal fade">
-    <div class="modal-dialog ">
-    <div class="modal-content ">
-        <form id="loginForm" action="includes/shopDetails.inc.php" method="POST" data-parsley-validate="">
-        <div class="modal-header">
-            <h4 class="modal-title">Shop Details</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-            <input type="text" data-parsley-required-message="Please enter your email" class="form-control" name = "email" placeholder="Email" data-parsley-type="email" required="">
-            </div>
-            <div class="form-group">
-                <label>*Shop</label>
-                <input type="text" data-parsley-required-message="Please enter your shops name" name = "shop" class="form-control" placeholder="Shop" data-parsley-length="[1, 50]" data-parsley-group="block1" required="">
-                <div class="valid-feedback">
-                    Looks good!
-                    </div>
-            </div>
-            <div class="form-group">
-                <label>Cooperates</label>
-                <input type="text" data-parsley-required-message="Please enter any cooperates" name = "cooperates" class="form-control" placeholder="Cooperates" data-parsley-length="[1, 70]" data-parsley-group="block1">
-            </div>  
-        </div>
-        <div class="modal-footer d-flex justify-content-between">
-            <input type="button" class="btn btn-danger" data-dismiss="modal" value="Cancel">
-            <input type="submit" class="btn btn-info" value="Login" name="submitShopDetails"></input>
-        </div>
-        </form>
-       </div>
-    </div>
-</div>
-
 
