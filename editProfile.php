@@ -103,7 +103,7 @@ include_once 'includes/header.inc.php';
                                                 ?>
                                                     <div class="col d-flex justify-content-start">
                                                         <a href="#deleteAccount" data-toggle="modal" 
-                                                        class="btn btn-danger" style="position: relative; bottom: 37px;">Delete Account</a>
+                                                        class="btn btn-danger" style="position: relative; bottom: 37px;">Deactivate Account</a>
                                                     </div>
 
                                                     <div class="col d-flex justify-content-center">

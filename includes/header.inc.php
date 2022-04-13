@@ -4,6 +4,7 @@ $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
 $res = preg_replace('/\?[^?]*$/', '', $escaped_url);
 $_SESSION['lastVisitedPage'] = $res;
+include_once 'includes/capdb.inc.php';
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -21,6 +22,7 @@ $_SESSION['lastVisitedPage'] = $res;
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
     
     <link rel="stylesheet" href="assets/css/animate.min.css">
 
@@ -52,7 +54,7 @@ $_SESSION['lastVisitedPage'] = $res;
 
     
     <script src="https://code.jquery.com/jquery.js"></script>
-
+  
     <script src="assets/js/parsley.min.js"></script>
     
     <link rel = "stylesheet" href="assets/css/parsley.css">
@@ -133,12 +135,12 @@ $_SESSION['lastVisitedPage'] = $res;
     <div class="middle-header-area">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <div class="middle-header-search">
+                <div class="col-lg-4">
+                    <div class="middle-header-search" style="width: 350px;">
                         <form action="" method="POST" class="search-form">
                             <label>
                                 <span class="screen-reader-text">Search for:</span>
-                                <input style="width: 350px;" type="text" name="search" class="search-field" placeholder="Search the entire store here" onkeydown="searchq();"/>
+                                <input type="text" name="search" class="search-field" placeholder="Search the entire store here" onkeydown="searchq();"/>
                             </label>
                            <!-- <button style="margin-right: 190px;" type="submit">
                                 <i class='bx bx-search-alt'></i>
@@ -149,10 +151,10 @@ $_SESSION['lastVisitedPage'] = $res;
                         </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                    <ul class="middle-header-optional">
+                <div class="col-lg-5">
+                    <ul class="middle-header-optional" style="margin-right: -300px;">
                     <?php
-                    if(isset($_SESSION['wishlist']) && isset($_SESSION['countwishlist'])){
+                    if(isset($_SESSION['wishlist']) && isset($_SESSION['countwishlist']) && isset($_SESSION['userID'])){
                         echo '<li class="cart">
                             <a href="wishlist.php"><i class="flaticon-heart"><span>'.$_SESSION['countwishlist'].'</span></i>Wishlist</a>
                         </li>';
@@ -165,7 +167,7 @@ $_SESSION['lastVisitedPage'] = $res;
                         ?>
 
                         <?php
-                    if(isset($_SESSION['cart']) && isset($_SESSION['countcart'])){
+                    if(isset($_SESSION['cart']) && isset($_SESSION['countcart']) && isset($_SESSION['userID'])){
                         echo '<li class="cart">
                             <a href="cart.php"><i class="flaticon-shopping-cart"><span>'.$_SESSION['countcart'].'</span></i>My Cart</a>
                         </li>';
@@ -177,15 +179,13 @@ $_SESSION['lastVisitedPage'] = $res;
                     ?>
                     <?php
                     if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) ){
-
-                    include_once 'includes/capdb.inc.php';
-                    $uID = $_SESSION['userID'];
-                        
-                       $sql = "SELECT *
-                               FROM orders AS a
-                               INNER JOIN orders_products AS b ON a.orderID = b.orderID
-                               INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
-                               WHERE c.userID = $uID AND a.orderstatus=0;";
+                       $uID = $_SESSION['userID'];       
+                       $sql = "SELECT *, SUM(orderprice) AS odr
+                                FROM orders AS a
+                                INNER JOIN orders_products AS b ON a.orderID = b.orderID
+                                INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
+                                INNER JOIN users AS d ON a.userID = d.userID
+                                WHERE c.userID = $uID AND a.orderstatus = 0 GROUP BY b.orderID";
 
                                $result = mysqli_query($conn, $sql);
                                $resultCheck = mysqli_num_rows($result);
@@ -195,11 +195,58 @@ $_SESSION['lastVisitedPage'] = $res;
                     </li>
 
                     <?php
+                     $sqlwa = "SELECT * FROM
+                                waittinglist AS a
+                                INNER JOIN partsdetails AS b ON a.carpartID = b.carpartID
+                                WHERE a.userID = $uID AND b.quantity !=0;";
+
+                    $resultwa = mysqli_query($conn, $sqlwa);
+                    $resultCheckwa = mysqli_num_rows($resultwa);
+                    ?>
+                  
+                    <li>
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="flaticon-appointment"><span><?php echo $resultCheckwa?></span></i>Waitting list
+                            </a>
+
+                              <!-- Dropdown - Messages -->
+                              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Waitting list notifications
+                                </h6>
+                            
+
+                            <?php
+                            $sqlWAL = "SELECT * FROM
+                                        waittinglist AS a
+                                        INNER JOIN partsdetails AS b ON a.carpartID = b.carpartID
+                                        WHERE a.userID = $uID;
+                                        ";
+
+                                        $resultWAL = mysqli_query($conn, $sqlWAL);
+
+                                    while($rowWAL = mysqli_fetch_assoc($resultWAL)){
+                                        if($rowWAL['quantity'] != 0){
+                                ?>
+
+                                <a class="dropdown-item d-flex align-items-center" href="products-details.php?id=<?php echo $rowWAL['carpartID']?>">
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate"><?php echo $rowWAL['productname']?> IS BACK IN STOCK!</div>
+                                    </div>
+                                </a>
+                                <?php
+                                 }
+                                ?>
+                    <?php
+                     }
                     }
-                        ?>
+                    ?>   
+                
                         <?php
                         if(isset($_SESSION['role']) && ($_SESSION['role'] == 1 || $_SESSION['role'] == 4)){
-                            echo " <li>
+                            echo " <li class='cart'>
                             <div class='dropdown' style='position: relative; z-index: 2;'>
                                 <button class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";?><?php echo $_SESSION['name'] . ' ' . $_SESSION['surname'];?><?php echo "</button>
                                 <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
@@ -211,7 +258,7 @@ $_SESSION['lastVisitedPage'] = $res;
 
                         </li>";
                         }else if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3)){
-                            echo " <li>
+                            echo " <li class='cart'>
                             <div class='dropdown' style='position: relative; z-index: 2;'>
                                 <button class='btn btn-danger dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";?><?php echo $_SESSION['name'] . ' ' . $_SESSION['surname'];?><?php echo "</button>
                                 <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
@@ -225,7 +272,7 @@ $_SESSION['lastVisitedPage'] = $res;
                         </li>";
                         }
                         else{
-                            echo " <li>
+                            echo " <li class='cart'>
                             <a data-toggle='modal' href='#loginuser' class='user-btn'><i class='flaticon-enter'></i>Login /
                                 Register</a>
                         </li>";

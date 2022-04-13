@@ -68,7 +68,7 @@ include_once "includes/header.inc.php";
                                 <option value="Filters">Filters</option>
                                 <option value="Engine">Engine</option>
                                 <option value="Windscreen cleaning system">Windscreen cleaning system</option>
-                                <option value="Ingnition and Glowplug System">Brake System</option>
+                                <option value="Ingnition and Glowplug System">Ingnition and Glowplug System</option>
                                 <option value="Suspension and arms">Suspension and Arms</option>
                                 <option value="Electrics">Electrics</option>
                                 <option value="Damping">Damping</option>

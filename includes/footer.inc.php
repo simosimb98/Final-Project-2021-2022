@@ -571,6 +571,46 @@ if (isset($_GET['deletion'])) {
             }
             }
 
+            if (isset($_GET['payment'])) {
+                if ($_GET['payment'] == 'unsuccessfull') {
+                echo '
+                        <script>
+                        $(document).ready(function(){
+                        Swal.fire({
+                            position: "center",
+                            icon: "warning",
+                            title: "Something went wrong!",
+                            showConfirmButton: false,
+                            timer: 51000                 
+                        }).then(function() {
+                            window.location="cart.php"
+                        })
+                        });                 
+                        </script>
+                                ';
+                }
+                }
+        
+                if (isset($_GET['payment'])) {
+                    if ($_GET['payment'] == 'successfull') {
+                    echo '
+                            <script>
+                            $(document).ready(function(){
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thank you for your purchase!",
+                                showConfirmButton: false,
+                                timer: 51000                 
+                            }).then(function() {
+                                window.location="cart.php"
+                            })
+                            });                 
+                            </script>
+                                    ';
+                    }
+                    }
+
 ?>
 
 

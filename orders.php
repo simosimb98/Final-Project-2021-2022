@@ -1,12 +1,13 @@
 <?php
 include_once "includes/header.inc.php"; 
 ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
-$(document).ready(function() {
-$('#contentable').DataTable();
-} );
+$(document).ready(function(){
+    $('#contentable').DataTable();
+});
 </script>
 
     <div class="page-banner-area">
@@ -40,36 +41,36 @@ $('#contentable').DataTable();
                                 <thead>
                                     <tr>
                                        <th scope="col">Status</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total price</th>
-                                        <th scope="col">Date Purchased</th>
+                                        <th scope="col">Order Details</th>
+                                        <th scope="col">Total price(+shipping)</th>
+                                        <th scope="col">Date of purchase</th>
+                                        <th scope="col">Time of purchase</th>
                                         <th scope="col">Buyer Details</th>
                                     </tr>
                                 </thead>
                            <?php
                         include_once 'includes/capdb.inc.php';
                         $uID = $_SESSION['userID'];
-                        
-                       $sql = "SELECT *
+                       $sql = "SELECT *, SUM(orderprice) AS odr
                                FROM orders AS a
                                INNER JOIN orders_products AS b ON a.orderID = b.orderID
                                INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
                                INNER JOIN users AS d ON a.userID = d.userID
-                               WHERE c.userID = $uID;";
+                               WHERE c.userID = $uID GROUP BY b.orderID";
 
-                                $result = mysqli_query($conn, $sql);
+                                $result = mysqli_query($conn, $sql);    
 
                             while($row = mysqli_fetch_assoc($result)){
+
                                  ?>  
                          <tbody>
                          <tr class="top-class">
                              <?php
                              if($row['orderstatus'] == 0){
+                                 
                              ?>
                          <td class="product-name">
-                             <form action="includes/orderStatus.inc.php?orderID=<?php echo $row['orderID']?>" method="POST">
+                             <form action="includes/orderStatus.inc.php?orderID=<?php echo $row['orderID']?>&name=<?php echo $row['name'];?>&surname=<?php echo $row['surname']?>&email=<?php echo $row['email'];?>&orderprice=<?php echo $row['odr'];?>" method="POST">
                                 <button class="btn btn-outline-danger" name="orderStatus" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -88,20 +89,54 @@ $('#contentable').DataTable();
                             <?php
                              }
                             ?>
-                            <td class="product-name">
-                                <a href="products-details.php?id=<?php echo $row['carpartID']; ?>"><?php echo $row['productname'];?></a>
-                            </td>
+                            <td>
+                            <!-- -->
+                            <div class='table-wrapper'>
+                 <table class='table table-bordered' id='dataTable' width='50%' cellspacing='0'>
+                 <thead>
+                   <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $orderID = $row['orderID'];
+                    $orderquery = "SELECT productname, price, orderquantity
+                                    FROM orders AS a
+                                    INNER JOIN orders_products AS b ON a.orderID = b.orderID
+                                    INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
+                                    WHERE b.orderID = $orderID;";
+                                    
+                    $resultorder = mysqli_query($conn, $orderquery);
+
+                foreach($resultorder as $rowOrder){
+                 echo "
+                  <tr>
+                        <td>".$rowOrder['productname']."</td>
+                        <td>€".$rowOrder["price"]."</td>
+                        <td>".$rowOrder["orderquantity"]."</td>
+                        </tr>
+                        ";
+                    }
+                  echo  "
+                  </tbody>
+                    </table>
+                    </div>
+
+                            <!-- -->
+                            </td>";
+                            ?>
                             <td class="product-price">
-                                <span class="unit-amount">€<?php echo $row['price'];?></span>
-                            </td>      
-                            <td class="product-price">
-                                <span class="unit-amount"><?php echo $row['orderquantity'];?></span>
-                            </td>  
-                            <td class="product-price">
-                                <span class="unit-amount">€<?php echo $row['orderprice'];?></span>
+                                <span class="unit-amount">€<?php echo $row['odr'];?></span>
                             </td>     
                             <td class="product-price">
                                 <span class="unit-amount"><?php echo $row['purchaseDate'];?></span>
+                            </td>      
+                            <td class="product-price">
+                                <span class="unit-amount"><?php echo $row['time'];?></span>
                             </td>        
                             <td class="product-price">
                             <div class="box-cust">
@@ -139,5 +174,3 @@ $('#contentable').DataTable();
 <?php
 include_once "includes/footer.inc.php";
 ?>
-
-

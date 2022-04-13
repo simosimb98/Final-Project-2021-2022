@@ -12,6 +12,11 @@ if(isset($_GET["page"])){
 
 $start_from = ($page - 1) * $records_per_page;
 ?>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<body>
         <div class="others-option-for-responsive">
             <div class="container">
                 <div class="dot-menu">
@@ -61,42 +66,41 @@ $start_from = ($page - 1) * $records_per_page;
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-12">
-                    <form action="" method="GET">
-
                     <h5 class="text-center">Filter Products        
-                        <button type="submit" class="btn btn-danger">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                            </svg>
-                            Search</button>
                     </h5>
                     <hr>
 
                     <div class="shop-sidebar">
+                    <div class="brand-sidebar-item">
+                    <div class="list-group">
+                            <h3>Price</h3>
+                            <input type="hidden" id="hidden_minimum_price" value="0"/>
+                            <input type="hidden" id="hidden_maximum_price" value="1000"/>
+                            <p id = "price_show">10 - 1000</p>
+                            <div id ="price_range">
+                                
+                            </div>
+                          </div>
+                        </div>
+
                         <div class="brand-sidebar-item">
                             <h3>Brand</h3>
                             <ul class="brand-input-checkbox" style="height: 250px; overflow-y: scroll;">
                             <?php
 
-                                $sqlBrands= "SELECT carpartID,car_brand FROM partsdetails ORDER BY car_brand;";
-                                $resultBrands =  mysqli_query($conn,$sqlBrands);
+                                $sql= "SELECT DISTINCT (car_brand) FROM partsdetails ORDER BY carpartID DESC;";
+                                $resultBrands =  mysqli_query($conn,$sql);
 
                                 while($rowBrands = mysqli_fetch_assoc($resultBrands)){
-
-                                    $checked = [];
-                                    if(isset($_GET['brands'])){
-                                        $checked = $_GET['brands'];
-                                    }
                                 ?>
                                 <li class="checkbox">
-                                    <input type="checkbox" name="brands[]" class="input" value="<?php echo $rowBrands['carpartID'];?>"
-                                    <?php
-                                    if(in_array($rowBrands['carpartID'],$checked)){
-                                        echo "checked";
-                                    }
-                                    ?>
-                                    />
-                                    <label class="label"><?php echo $rowBrands['car_brand'];?></label>
+                                 <div class="list-group-item checkbox">
+                                     <label>
+                                         <input type="checkbox" class="common-selector brand" value="<?php echo $rowBrands['car_brand'];?>"/>
+                                         <?php echo $rowBrands['car_brand'];?>
+                                     </label>
+
+                                 </div>
                                 </li>
                                 <?php
                             }
@@ -104,29 +108,24 @@ $start_from = ($page - 1) * $records_per_page;
                             </ul>
                         </div>
 
-                        <div class="discount-sidebar-item">
+                        <div class="brand-sidebar-item">
                             <h3>Category</h3>
-                            <ul class="discount-input-checkbox" style="height: 600px; overflow-y: scroll;">
+                            <ul class="brand-input-checkbox" style="height: 390px; overflow-y: scroll;">
                             <?php
 
-                                $sqlCategory= "SELECT carpartID,category FROM partsdetails ORDER BY category;";
-                                $resultCategory =  mysqli_query($conn,$sqlCategory);
+                                $sql= "SELECT DISTINCT (category) FROM partsdetails ORDER BY carpartID DESC;";
+                                $resultCategory =  mysqli_query($conn,$sql);
 
                                 while($rowCategory = mysqli_fetch_assoc($resultCategory)){
-                                    $checked1 =[];
-                                    if(isset($_GET['category'])){
-                                        $checked1 = $_GET['category'];
-                                    }
                                 ?>
                                 <li class="checkbox">
-                                    <input type="checkbox" name="category[]" value ="<?php echo $rowCategory['carpartID'];?>" class="input"
-                                    <?php
-                                    if(in_array($rowCategory['carpartID'],$checked1)){
-                                        echo "checked";
-                                    }
-                                    ?>
-                                    />
-                                    <label class="label"><?php echo $rowCategory['category'];?></label>
+                                 <div class="list-group-item checkbox">
+                                     <label>
+                                         <input type="checkbox" class="common-selector category" value="<?php echo $rowCategory['category'];?>"/>
+                                         <?php echo $rowCategory['category'];?>
+                                     </label>
+
+                                 </div>
                                 </li>
                                 <?php
                             }
@@ -134,415 +133,12 @@ $start_from = ($page - 1) * $records_per_page;
                             </ul>
                         </div>
                     </div>
-
-                    </form>
-                </div>
-                <div class="col-lg-9 col-md-12">
-                    <?php
-                    if(isset($_GET['brands']) && !isset($_GET['category'])){
-                        $brandsChecked = [];
-                        $brandsChecked = $_GET['brands'];
-
-                        foreach($brandsChecked as $rowBrand){
-
-                            $sql = "SELECT * FROM partsdetails pd
-                            INNER JOIN carpartsmultimedia pc
-                            ON pd.carpartID = pc.carpartID
-                            WHERE pd.carpartID IN ($rowBrand)
-                            GROUP BY pd.carpartID LIMIT $start_from, $records_per_page;";
-
-                    $result = mysqli_query($conn, $sql);
-                    $resultCheck = mysqli_num_rows($result);
-                    
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo '
-                        <form action = "includes/addToCart.inc.php?action=add&id='.$row['carpartID'].'&quantity='.$row['quantity'].'" method = "POST">
-                         <div class="shop-item-box">
-                        <div class="row align-items-center">
-                            <div class="col-lg-3 col-sm-3">
-                                <div class="shop-image">
-                                    <a href="products-details.php?id='.$row['carpartID'].'">
-                                        <img id = "img" src="'.$row['photo'].'" alt="image">
-                                        <input type = "hidden" name ="photo_shop" class = "btn btn-outline-danger" value = "'.$row['photo'].'"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="shop-content">
-                                    <h3>
-                                        <a name = "prodname" href="products-details.php?id='.$row['carpartID'].'">'.$row["productname"].'</a>
-                                        <input type = "hidden" name ="prname_shop" class = "btn btn-outline-danger" value ="'.$row['productname'].'" />
-
-                                    </h3>
+                    </div>
+        <div class="col-lg-9 col-md-12">
+            <div class="row filter_data">
             
-                                    <ul class="shop-list">
-                                        <li>Brand: '.$row["car_brand"].'</li>
-                                        <li>Model: '.$row["car_model"].'</li>
-                                        <li>Year: '.$row["year"].'</li>
-                                        <li>Engine '.$row["engine_size"].'</li>
-                                        <li>Category: '.$row["category"].'</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <ul class="shop-btn-list">
-                                    <li>
-                                        <span id = "prodprice" class="product-price">€' . $row['price'] . '</span>
-                                        <input type = "hidden" name ="price_shop" class = "btn btn-outline-danger" value = "'.$row['price'].'"/>
-                                        <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value = "'.$row['shippingcost'].'"/>
-                                    </li>';
-                                    ?>
-
-                                  <?php
-                                    if($row['quantity'] == 0){
-                                        echo'
-                                        <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 152px; margin-left: 10px; margin-bottom: 15px;">Add to Cart 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                    </svg></a>
-                                        
-                                    
-                                    </li>
-                                    <li>
-                                    <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                        </svg>
-                                    </button>
-                                       </li>
-                                        ';
-                                    }else{
-                                        echo '
-                                        <li>
-                                        <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 152px;">Add to Cart
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                        </svg>
-                                       </button>
-                                        
-                                        </li>
-                                        <li>
-                                        <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                            </svg>
-                                        </button>
-                                           </li>
-                                        ';
-                                    }
-                                    ?>
-                                 
-                                </ul>
-                            </div>
-                        </div>
-                    </div> 
-                    </form>
-                    <?php
-                    } 
-                        }
-
-                    }else if(isset($_GET['category']) && !isset($_GET['brands'])){
-                        $categChecked = [];
-                        $categChecked = $_GET['category'];
-
-                        foreach($categChecked as $rowCat){
-
-                            $sql = "SELECT * FROM partsdetails pd
-                            INNER JOIN carpartsmultimedia pc
-                            ON pd.carpartID = pc.carpartID
-                            WHERE pd.carpartID IN ($rowCat)
-                            GROUP BY pd.carpartID LIMIT $start_from, $records_per_page;";
-
-                    $result = mysqli_query($conn, $sql);
-                    $resultCheck = mysqli_num_rows($result);
-                    
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo '
-                        <form action = "includes/addToCart.inc.php?action=add&id='.$row['carpartID'].'&quantity='.$row['quantity'].'" method = "POST">
-                         <div class="shop-item-box">
-                        <div class="row align-items-center">
-                            <div class="col-lg-3 col-sm-3">
-                                <div class="shop-image">
-                                    <a href="products-details.php?id='.$row['carpartID'].'">
-                                        <img id = "img" src="'.$row['photo'].'" alt="image">
-                                        <input type = "hidden" name ="photo_shop" class = "btn btn-outline-danger" value = "'.$row['photo'].'"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="shop-content">
-                                    <h3>
-                                        <a name = "prodname" href="products-details.php?id='.$row['carpartID'].'">'.$row["productname"].'</a>
-                                        <input type = "hidden" name ="prname_shop" class = "btn btn-outline-danger" value ="'.$row['productname'].'" />
-
-                                    </h3>
-            
-                                    <ul class="shop-list">
-                                        <li>Brand: '.$row["car_brand"].'</li>
-                                        <li>Model: '.$row["car_model"].'</li>
-                                        <li>Year: '.$row["year"].'</li>
-                                        <li>Engine '.$row["engine_size"].'</li>
-                                        <li>Category: '.$row["category"].'</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <ul class="shop-btn-list">
-                                    <li>
-                                        <span id = "prodprice" class="product-price">€' . $row['price'] . '</span>
-                                        <input type = "hidden" name ="price_shop" class = "btn btn-outline-danger" value = "'.$row['price'].'"/>
-                                        <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value = "'.$row['shippingcost'].'"/>
-                                    </li>';
-                                    ?>
-
-                                  <?php
-                                    if($row['quantity'] == 0){
-                                        echo'
-                                        <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 152px; margin-left: 10px; margin-bottom: 15px;">Add to Cart 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                    </svg></a>
-                                        
-                                    
-                                    </li>
-                                    <li>
-                                    <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                        </svg>
-                                    </button>
-                                       </li>
-                                        ';
-                                    }else{
-                                        echo '
-                                        <li>
-                                        <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 152px;">Add to Cart
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                        </svg>
-                                       </button>
-                                        
-                                        </li>
-                                        <li>
-                                        <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                            </svg>
-                                        </button>
-                                           </li>
-                                        ';
-                                    }
-                                    ?>
-                                 
-                                </ul>
-                            </div>
-                        </div>
-                    </div> 
-                    </form>
-                    <?php
-                    } 
-                        }
-
-                    }else if(isset($_GET['brands']) && isset($_GET['category'])){
-                        $bothChecked = [];
-                        $bothChecked = array_merge($_GET['brands'], $_GET['category']);
-
-                        foreach($bothChecked as $rowBoth){
-
-                            $sql = "SELECT * FROM partsdetails pd
-                            INNER JOIN carpartsmultimedia pc
-                            ON pd.carpartID = pc.carpartID
-                            WHERE pd.carpartID IN ($rowBoth)
-                            GROUP BY pd.carpartID LIMIT $start_from, $records_per_page;";
-
-                    $result = mysqli_query($conn, $sql);
-                    $resultCheck = mysqli_num_rows($result);
-                    
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo '
-                        <form action = "includes/addToCart.inc.php?action=add&id='.$row['carpartID'].'&quantity='.$row['quantity'].'" method = "POST">
-                         <div class="shop-item-box">
-                        <div class="row align-items-center">
-                            <div class="col-lg-3 col-sm-3">
-                                <div class="shop-image">
-                                    <a href="products-details.php?id='.$row['carpartID'].'">
-                                        <img id = "img" src="'.$row['photo'].'" alt="image">
-                                        <input type = "hidden" name ="photo_shop" class = "btn btn-outline-danger" value = "'.$row['photo'].'"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="shop-content">
-                                    <h3>
-                                        <a name = "prodname" href="products-details.php?id='.$row['carpartID'].'">'.$row["productname"].'</a>
-                                        <input type = "hidden" name ="prname_shop" class = "btn btn-outline-danger" value ="'.$row['productname'].'" />
-
-                                    </h3>
-            
-                                    <ul class="shop-list">
-                                        <li>Brand: '.$row["car_brand"].'</li>
-                                        <li>Model: '.$row["car_model"].'</li>
-                                        <li>Year: '.$row["year"].'</li>
-                                        <li>Engine '.$row["engine_size"].'</li>
-                                        <li>Category: '.$row["category"].'</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <ul class="shop-btn-list">
-                                    <li>
-                                        <span id = "prodprice" class="product-price">€' . $row['price'] . '</span>
-                                        <input type = "hidden" name ="price_shop" class = "btn btn-outline-danger" value = "'.$row['price'].'"/>
-                                        <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value = "'.$row['shippingcost'].'"/>
-                                    </li>';
-                                    ?>
-
-                                  <?php
-                                    if($row['quantity'] == 0){
-                                        echo'
-                                        <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 152px; margin-left: 10px; margin-bottom: 15px;">Add to Cart 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                    </svg></a>
-                                        
-                                    
-                                    </li>
-                                    <li>
-                                    <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                        </svg>
-                                    </button>
-                                       </li>
-                                        ';
-                                    }else{
-                                        echo '
-                                        <li>
-                                        <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 152px;">Add to Cart
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                        </svg>
-                                       </button>
-                                        
-                                        </li>
-                                        <li>
-                                        <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                            </svg>
-                                        </button>
-                                           </li>
-                                        ';
-                                    }
-                                    ?>
-                                 
-                                </ul>
-                            </div>
-                        </div>
-                    </div> 
-                    </form>
-                    <?php
-                    } 
-                        }
-
-                    }else{
-                    $sql = "SELECT * FROM partsdetails pd
-                            INNER JOIN carpartsmultimedia pc
-                            ON pd.carpartID = pc.carpartID
-                            GROUP BY pd.carpartID LIMIT $start_from, $records_per_page;";
-
-                    $result = mysqli_query($conn, $sql);
-                    $resultCheck = mysqli_num_rows($result);
-                    
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo '
-                        <form action = "includes/addToCart.inc.php?action=add&id='.$row['carpartID'].'&quantity='.$row['quantity'].'" method = "POST">
-                         <div class="shop-item-box">
-                        <div class="row align-items-center">
-                            <div class="col-lg-3 col-sm-3">
-                                <div class="shop-image">
-                                    <a href="products-details.php?id='.$row['carpartID'].'">
-                                        <img id = "img" src="'.$row['photo'].'" alt="image">
-                                        <input type = "hidden" name ="photo_shop" class = "btn btn-outline-danger" value = "'.$row['photo'].'"/>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-sm-6">
-                                <div class="shop-content">
-                                    <h3>
-                                        <a name = "prodname" href="products-details.php?id='.$row['carpartID'].'">'.$row["productname"].'</a>
-                                        <input type = "hidden" name ="prname_shop" class = "btn btn-outline-danger" value ="'.$row['productname'].'" />
-
-                                    </h3>
-            
-                                    <ul class="shop-list">
-                                        <li>Brand: '.$row["car_brand"].'</li>
-                                        <li>Model: '.$row["car_model"].'</li>
-                                        <li>Year: '.$row["year"].'</li>
-                                        <li>Engine '.$row["engine_size"].'</li>
-                                        <li>Category: '.$row["category"].'</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-3">
-                                <ul class="shop-btn-list">
-                                    <li>
-                                        <span id = "prodprice" class="product-price">€' . $row['price'] . '</span>
-                                        <input type = "hidden" name ="price_shop" class = "btn btn-outline-danger" value = "'.$row['price'].'"/>
-                                        <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value = "'.$row['shippingcost'].'"/>
-                                    </li>';
-                                    ?>
-
-                                  <?php
-                                    if($row['quantity'] == 0){
-                                        echo'
-                                        <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 152px; margin-left: 10px; margin-bottom: 15px;">Add to Cart 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                    </svg></a>
-                                        
-                                    
-                                    </li>
-                                    <li>
-                                    <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                        </svg>
-                                    </button>
-                                       </li>
-                                        ';
-                                    }else{
-                                        echo '
-                                        <li>
-                                        <button type = "submit" name ="addToCart" class = "btn btn-outline-danger" style="width: 152px;">Add to Cart
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
-                                            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
-                                        </svg>
-                                       </button>
-                                        
-                                        </li>
-                                        <li>
-                                        <button type = "submit" name ="addToWishlist" class = "btn btn-outline-danger">Add to Wishlist
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                            </svg>
-                                        </button>
-                                           </li>
-                                        ';
-                                    }
-                                    ?>
-                                 
-                                </ul>
-                            </div>
-                        </div>
-                    </div> 
-                    </form>
-                    <?php
-                    } 
-                }
-                    ?>
-                    <div class="col-lg-12 col-md-12">
-                        <div class="pagination-area">
+                  </div>
+                  <div class="pagination-area">
                             <?php
                                 $page_query = "SELECT * FROM partsdetails pd
                                                 INNER JOIN carpartsmultimedia pc
@@ -578,13 +174,79 @@ $start_from = ($page - 1) * $records_per_page;
                                 
                             ?>
                         </div>
-                    </div>
-                </div>
+              </div>   
+                </div>               
             </div>
         </div>
     </section>
-    <!--<script src="assets/js/main.inc.js"></script>-->
 
+<style>
+#loading
+{
+    text-align: center;
+    background: url('fade.gif') no-repeat center;
+    height: 50px;
+}
+</style>
+
+<script>
+    $(document).ready(function(){
+
+        filter_data();
+
+        function filter_data()
+        {
+            $('.filter_data').html('<div id = "loading" style=""></div>');
+            var action = 'fetch_data';
+            var minimum_price = $('#hidden_minimum_price').val();
+            var maximum_price = $('#hidden_maximum_price').val();
+            var brand = get_filter('brand');
+            var category = get_filter('category');
+            var start_from = <?php echo $start_from?>;
+            var records_per_page = <?php echo $records_per_page?>;
+            $.ajax({
+                url: "includes/fetch_data.inc.php",
+                method : "POST",
+                data: {action:action, minimum_price:minimum_price,maximum_price:maximum_price, brand:brand,
+                     category:category, start_from:start_from, records_per_page:records_per_page},
+            success: function(data){
+                $('.filter_data').html(data);
+            }
+            });
+        }
+
+        function get_filter(class_name)
+        {
+            var filter = [];
+            $('.'+class_name+':checked').each(function(){
+                filter.push($(this).val());
+            });
+
+            return filter;
+        }
+
+        $('.common-selector').click(function(){
+            filter_data();
+        });
+
+        $('#price_range').slider({
+            range:true,
+            min:10,
+            max:1000,
+            values:[10, 1000],
+            step:10,
+            stop:function(event, ui)
+            {
+                $('#price_show').html(ui.values[0] + ' - ' + ui.values[1]);
+                $('#hidden_minimum_price').val(ui.values[0]);
+                $('#hidden_maximum_price').val(ui.values[1]);
+                filter_data();
+            }
+        });
+
+    });
+</script>
+</body>
 <?php
 include_once "includes/footer.inc.php";
 ?>

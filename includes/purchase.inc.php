@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $uID = $_SESSION['userID'];
 
-        $sql1 = "INSERT INTO orders (userID, purchaseDate, orderstatus) VALUES ($uID, NOW(), 0);";
+        $sql1 = "INSERT INTO orders (userID, purchaseDate, time, orderstatus) VALUES ($uID, NOW(), CURRENT_TIME(), 0);";
 
         if(mysqli_query($conn, $sql1)){
 

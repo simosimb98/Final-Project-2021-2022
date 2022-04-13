@@ -130,3 +130,22 @@ function addContactUsInquiry($conn, $name, $surname, $emailFrom, $phone, $subjec
     mysqli_stmt_close($stmt);
     exit();
 }
+
+function sendDeliveredEmail($name, $surname, $emailTo, $orderprice)
+{
+
+    //Prepare and send email
+    //change emails to correct
+    $subject = "General message MAXON Car Auto Parts";
+    $headers = 'From: Maxon Auto Parts <maxon09987@gmail.com>';
+    $emailText = "Dear $name, $surname you order has been delivered to you\n\nOrder details:\n\n";
+    $emailText.="Total price: $$orderprice\n\nThank you from shopping MAXON Autoparts";
+    
+    if (mail($emailTo, $subject, $emailText, $headers)) {
+        header('Location: ../orders.php?mail=send');
+        
+    } else {
+        header('Location: ../orders.php?mail=notSend');
+    }
+}
+

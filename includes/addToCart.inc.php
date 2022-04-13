@@ -100,6 +100,19 @@ else if(isset($_POST['addToWishlist'])){
  exit();  
 }
 
+else if(isset($_POST['addToWaittingList'])){
+$uwID = $_SESSION['userID'];
+
+$partID = mysqli_real_escape_string($conn, $_GET['id']);
+
+$sqlWL = mysqli_query($conn,"INSERT INTO waittinglist(userID, carpartID) VALUES($uwID, $partID);");
+
+echo "<script>
+window.history.back();
+</script>";
+
+}
+
 if(isset($_POST['modQuantity'])){
 
   foreach($_SESSION['cart'] as $keys => $values){
