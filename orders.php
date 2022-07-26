@@ -37,7 +37,7 @@ $(document).ready(function(){
             <div class="row">
                 <div class="col-lg-12 col-md-6">
                         <div class="table-responsive">
-                            <table id = "contentable" class="table table-bordered" width="100%" cellspacing="0">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                        <th scope="col">Status</th>
@@ -108,7 +108,7 @@ $(document).ready(function(){
                                     FROM orders AS a
                                     INNER JOIN orders_products AS b ON a.orderID = b.orderID
                                     INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
-                                    WHERE b.orderID = $orderID;";
+                                    WHERE b.orderID = $orderID ;";
                                     
                     $resultorder = mysqli_query($conn, $orderquery);
 

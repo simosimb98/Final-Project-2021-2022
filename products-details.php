@@ -113,7 +113,7 @@ $partID = $_GET['id'];
                                         <li><span>Car Brand: </span><?php echo $row['car_brand'];?></li>
                                         <li><span>Car Model: </span><?php echo $row['car_model'];?></li>
                                         <li><span>Engine Size: </span><?php echo $row['engine_size'];?></li>
-                                        <li><span>Engine Size: </span><?php echo $row['year'];?></li>
+                                        <li><span>Year: </span><?php echo $row['year'];?></li>
                                     </ul>
                                     <div class="product-quantities">
                                         <span>Stock Left: <?php echo $row['quantity']?></span>
@@ -126,6 +126,7 @@ $partID = $_GET['id'];
                                   <input type = "hidden" name ="shipping_shop" class = "btn btn-outline-danger" value ="<?php echo $row['shippingcost'];?>" />
 
                                   <?php
+                                  if(isset($_SESSION['userID'])){
                                   if($row['quantity'] == 0){
                                   ?>
                                     <a href="shop.php?item=outoFstock" class = "btn btn-outline-danger" style ="width: 200px;">Add to Cart 
@@ -148,6 +149,15 @@ $partID = $_GET['id'];
                                        </button>
                                        <?php
                                           }
+                                        }else{
+                                       ?>
+                                       <a href="shop.php?item=createAccount" class = "btn btn-outline-danger" style ="width: 200px;">Add to Cart 
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                                        <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                                    </svg></a>
+
+                                       <?php
+                                        }
                                        ?>
                                     </form>
                                     </div>

@@ -1,0 +1,322 @@
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2022-05-08 23:40:25
+count workspace : c:\xampp\htdocs\ptixiaki2021
+total files : 295
+total code lines : 28970
+total comment lines : 4358
+total blank lines : 5318
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |           .php|           4731|             23|            545|     16|
+   |          .json|             74|              0|              0|   0.26|
+   |           .css|           2525|            156|             97|    8.7|
+   |           .txt|            583|            183|             15|    2.0|
+   |          .html|            749|             87|             59|    2.6|
+   |            .js|          18461|           3907|           4599|     64|
+   |           .ini|             48|              0|              0|   0.17|
+   |           .lst|            215|              0|              0|   0.74|
+   |           .log|              6|              1|              2|  0.021|
+   |           .svg|           1576|              1|              1|    5.4|
+   |               |              2|              0|              0| 0.0069|
+   -------------------------------------------------------------------------
+.gitattributes, code is 2, comment is 0, blank is 0.
+about.php, code is 119, comment is 0, blank is 7.
+assets\css\animate.min.css, code is 2, comment is 7, blank is 0.
+assets\css\bootstrap.min.css, code is 2, comment is 6, blank is 0.
+assets\css\boxicons.min.css, code is 1, comment is 0, blank is 0.
+assets\css\flaticon.css, code is 1, comment is 0, blank is 0.
+assets\css\imagelightbox.min.css, code is 1, comment is 0, blank is 0.
+assets\css\magnific-popup.min.css, code is 1, comment is 0, blank is 0.
+assets\css\meanmenu.css, code is 1, comment is 0, blank is 0.
+assets\css\myaccount_dropdown.css, code is 29, comment is 7, blank is 6.
+assets\css\nice-select.min.css, code is 1, comment is 0, blank is 0.
+assets\css\odometer.min.css, code is 1, comment is 0, blank is 0.
+assets\css\owl.carousel.min.css, code is 1, comment is 5, blank is 0.
+assets\css\owl.theme.default.min.css, code is 1, comment is 5, blank is 0.
+assets\css\owl.video.play.html, code is 7, comment is 0, blank is 0.
+assets\css\parsley.css, code is 30, comment is 0, blank is 4.
+assets\css\responsive.css, code is 1, comment is 0, blank is 0.
+assets\css\style.css, code is 1, comment is 0, blank is 0.
+assets\fonts\boxicons.eot, it is a binary file.
+assets\fonts\boxicons.ttf, it is a binary file.
+assets\fonts\boxicons.woff, it is a binary file.
+assets\fonts\boxicons.woff2, it is a binary file.
+assets\fonts\boxiconsd41d.svg, code is 1510, comment is 0, blank is 0.
+assets\fonts\Flaticon.eot, it is a binary file.
+assets\fonts\Flaticon.svg, code is 66, comment is 1, blank is 1.
+assets\fonts\Flaticon.ttf, it is a binary file.
+assets\fonts\Flaticon.woff, it is a binary file.
+assets\fonts\Flaticon.woff2, it is a binary file.
+assets\fonts\Flaticond41d.eot, it is a binary file.
+assets\img\404.png, it is a binary file.
+assets\img\arab.png, it is a binary file.
+assets\img\Audi-logo.png, it is a binary file.
+assets\img\blog-details-1.jpg, it is a binary file.
+assets\img\blog-details-2.jpg, it is a binary file.
+assets\img\blog\blog-1.jpg, it is a binary file.
+assets\img\blog\blog-2.jpg, it is a binary file.
+assets\img\blog\blog-3.jpg, it is a binary file.
+assets\img\blog\blog-4.jpg, it is a binary file.
+assets\img\blog\blog-5.jpg, it is a binary file.
+assets\img\blog\blog-6.jpg, it is a binary file.
+assets\img\BMW_logo.png, it is a binary file.
+assets\img\categories\categories-1.jpg, it is a binary file.
+assets\img\categories\categories-2.jpg, it is a binary file.
+assets\img\categories\categories-3.jpg, it is a binary file.
+assets\img\categories\categories-4.jpg, it is a binary file.
+assets\img\categories\categories-5.jpg, it is a binary file.
+assets\img\china.png, it is a binary file.
+assets\img\client\client-1.jpg, it is a binary file.
+assets\img\client\client-2.jpg, it is a binary file.
+assets\img\client\client-3.jpg, it is a binary file.
+assets\img\coming-soon-bg-2.jpg, it is a binary file.
+assets\img\coming-soon-bg.jpg, it is a binary file.
+assets\img\english.png, it is a binary file.
+assets\img\favicon.png, it is a binary file.
+assets\img\footer-bg.jpg, it is a binary file.
+assets\img\footer-post\footer-post-1.jpg, it is a binary file.
+assets\img\footer-post\footer-post-2.jpg, it is a binary file.
+assets\img\fun-facts-bg.jpg, it is a binary file.
+assets\img\gallery\gallery-1.jpg, it is a binary file.
+assets\img\gallery\gallery-2.jpg, it is a binary file.
+assets\img\gallery\gallery-3.jpg, it is a binary file.
+assets\img\gallery\gallery-4.jpg, it is a binary file.
+assets\img\gallery\gallery-5.jpg, it is a binary file.
+assets\img\gallery\gallery-6.jpg, it is a binary file.
+assets\img\germany.png, it is a binary file.
+assets\img\logo-2.png, it is a binary file.
+assets\img\logo.png, it is a binary file.
+assets\img\main-banner1.jpg, it is a binary file.
+assets\img\main-banner2.jpg, it is a binary file.
+assets\img\main-banner3.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-1.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-2.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-3.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-4.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-5.jpg, it is a binary file.
+assets\img\main-slider\slider-bg-6.jpg, it is a binary file.
+assets\img\main-slider\slider-offer-1.jpg, it is a binary file.
+assets\img\main-slider\slider-offer-2.jpg, it is a binary file.
+assets\img\Mazda_logo_symbol.png, it is a binary file.
+assets\img\Mercedes-Logo.jpg, it is a binary file.
+assets\img\mission.jpg, it is a binary file.
+assets\img\newsletter\newsletter-bg-2.jpg, it is a binary file.
+assets\img\newsletter\newsletter-bg.jpg, it is a binary file.
+assets\img\newsletter\newsletter.png, it is a binary file.
+assets\img\nissan-logo-2013.png, it is a binary file.
+assets\img\nissan-logo.png, it is a binary file.
+assets\img\overview\overview-1.jpg, it is a binary file.
+assets\img\overview\overview-2.jpg, it is a binary file.
+assets\img\page-banner\page-banner-1.jpg, it is a binary file.
+assets\img\page-banner\page-banner-2.jpg, it is a binary file.
+assets\img\page-banner\page-banner-3.jpg, it is a binary file.
+assets\img\page-banner\page-banner-4.jpg, it is a binary file.
+assets\img\page-banner\page-banner-5.jpg, it is a binary file.
+assets\img\partner\partner-1.png, it is a binary file.
+assets\img\partner\partner-2.png, it is a binary file.
+assets\img\partner\partner-3.png, it is a binary file.
+assets\img\partner\partner-4.png, it is a binary file.
+assets\img\portugal.png, it is a binary file.
+assets\img\products\products-1.jpg, it is a binary file.
+assets\img\products\products-2.jpg, it is a binary file.
+assets\img\products\products-3.jpg, it is a binary file.
+assets\img\products\products-4.jpg, it is a binary file.
+assets\img\products\products-5.jpg, it is a binary file.
+assets\img\products\products-6.jpg, it is a binary file.
+assets\img\products\products-7.jpg, it is a binary file.
+assets\img\products\products-8.jpg, it is a binary file.
+assets\img\products\products-overview-1.jpg, it is a binary file.
+assets\img\products\products-overview-2.jpg, it is a binary file.
+assets\img\shop\shop-1.png, it is a binary file.
+assets\img\shop\shop-2.png, it is a binary file.
+assets\img\shop\shop-3.png, it is a binary file.
+assets\img\shop\shop-4.png, it is a binary file.
+assets\img\shop\shop-5.png, it is a binary file.
+assets\img\shop\shop-6.png, it is a binary file.
+assets\img\shop\shop-7.png, it is a binary file.
+assets\img\shop\shop-8.png, it is a binary file.
+assets\img\shop\shop-9.png, it is a binary file.
+assets\img\story.jpg, it is a binary file.
+assets\img\team\team-1.jpg, it is a binary file.
+assets\img\team\team-2.jpg, it is a binary file.
+assets\img\team\team-3.jpg, it is a binary file.
+assets\img\team\team-4.jpg, it is a binary file.
+assets\img\team\team-5.jpg, it is a binary file.
+assets\img\team\team-6.jpg, it is a binary file.
+assets\img\testimonials-bg.jpg, it is a binary file.
+assets\img\top-products\top-products-1.jpg, it is a binary file.
+assets\img\top-products\top-products-10.jpg, it is a binary file.
+assets\img\top-products\top-products-2.jpg, it is a binary file.
+assets\img\top-products\top-products-3.jpg, it is a binary file.
+assets\img\top-products\top-products-4.jpg, it is a binary file.
+assets\img\top-products\top-products-5.jpg, it is a binary file.
+assets\img\top-products\top-products-6.jpg, it is a binary file.
+assets\img\top-products\top-products-7.jpg, it is a binary file.
+assets\img\top-products\top-products-8.jpg, it is a binary file.
+assets\img\Toyota_symbol_logo.png, it is a binary file.
+assets\img\trending-products\trending-products-1.jpg, it is a binary file.
+assets\img\trending-products\trending-products-2.jpg, it is a binary file.
+assets\img\trending-products\trending-products-3.jpg, it is a binary file.
+assets\img\trending-products\trending-products-4.jpg, it is a binary file.
+assets\img\trending-products\trending-products-5.jpg, it is a binary file.
+assets\img\trending-products\trending-products-6.jpg, it is a binary file.
+assets\img\trending-products\trending-products-7.jpg, it is a binary file.
+assets\img\trending-products\trending-products-8.jpg, it is a binary file.
+assets\img\trending-products\trending-products-9.jpg, it is a binary file.
+assets\img\vision.jpg, it is a binary file.
+assets\img\Volkswagen-logo.png, it is a binary file.
+assets\js\bootstrap.min.js, code is 1, comment is 6, blank is 0.
+assets\js\carSelection.inc.js, code is 321, comment is 4, blank is 3.
+assets\js\contact-form-script.js, code is 5, comment is 0, blank is 0.
+assets\js\form-validator.min.js, code is 1, comment is 7, blank is 1.
+assets\js\imagelightbox.min.js, code is 82, comment is 0, blank is 0.
+assets\js\jquery.ajaxchimp.min.js, code is 1, comment is 0, blank is 0.
+assets\js\jquery.appear.min.js, code is 82, comment is 34, blank is 35.
+assets\js\jquery.magnific-popup.min.js, code is 1, comment is 3, blank is 0.
+assets\js\jquery.meanmenu.js, code is 1, comment is 0, blank is 0.
+assets\js\jquery.min.js, code is 1, comment is 2, blank is 0.
+assets\js\jquery.nice-select.min.js, code is 1, comment is 3, blank is 0.
+assets\js\main.js, code is 14, comment is 0, blank is 0.
+assets\js\odometer.min.js, code is 1, comment is 1, blank is 0.
+assets\js\owl.carousel.min.js, code is 2, comment is 5, blank is 0.
+assets\js\parsley.min.js, code is 1, comment is 1, blank is 0.
+assets\js\popper.min.js, code is 1, comment is 4, blank is 1.
+assets\js\wow.min.js, code is 1, comment is 3, blank is 0.
+backblue.gif, it is a binary file.
+blog-details.php, code is 232, comment is 0, blank is 2.
+blog-right-sidebar.php, code is 103, comment is 0, blank is 5.
+blog.php, code is 35, comment is 0, blank is 2.
+cart.php, code is 127, comment is 1, blank is 26.
+cdn-cgi\scripts\5c5dd728\cloudflare-static\email-decode.min.js, code is 1, comment is 0, blank is 0.
+checkout.php, code is 169, comment is 0, blank is 3.
+compare.php, code is 213, comment is 0, blank is 5.
+contact.php, code is 82, comment is 0, blank is 6.
+contactWithAccount.php, code is 82, comment is 0, blank is 6.
+editProducts.php, code is 231, comment is 0, blank is 17.
+editProfile.php, code is 109, comment is 0, blank is 9.
+error-404.php, code is 62, comment is 0, blank is 5.
+fade.gif, it is a binary file.
+faq.php, code is 167, comment is 0, blank is 3.
+gallery.php, code is 77, comment is 0, blank is 3.
+hts-cache\doit.log, code is 6, comment is 1, blank is 2.
+hts-cache\new.lst, code is 215, comment is 0, blank is 0.
+hts-cache\new.txt, code is 175, comment is 174, blank is 0.
+hts-cache\new.zip, it is a binary file.
+hts-cache\readme.txt, code is 1, comment is 0, blank is 0.
+hts-cache\winprofile.ini, code is 48, comment is 0, blank is 0.
+hts-log.txt, code is 9, comment is 3, blank is 3.
+includes\addToCart.inc.php, code is 85, comment is 0, blank is 48.
+includes\capdb.inc.php, code is 9, comment is 0, blank is 3.
+includes\changePassword.inc.php, code is 47, comment is 3, blank is 15.
+includes\contactUs.inc.php, code is 18, comment is 2, blank is 5.
+includes\contactUsPlainUser.inc.php, code is 16, comment is 2, blank is 5.
+includes\deleteAccount.inc.php, code is 10, comment is 0, blank is 5.
+includes\deleteProduct.inc.php, code is 21, comment is 0, blank is 8.
+includes\editProductDetails.inc.php, code is 30, comment is 0, blank is 9.
+includes\editProfile.inc.php, code is 37, comment is 1, blank is 7.
+includes\fetch_data.inc.php, code is 38, comment is 0, blank is 15.
+includes\footer.inc.php, code is 255, comment is 0, blank is 51.
+includes\functions.inc.php, code is 109, comment is 9, blank is 33.
+includes\getProducDetails.inc.php, code is 29, comment is 0, blank is 7.
+includes\header.inc.php, code is 131, comment is 0, blank is 3.
+includes\login.inc.php, code is 12, comment is 0, blank is 5.
+includes\logout.inc.php, code is 14, comment is 0, blank is 3.
+includes\modQuantity.inc.php, code is 11, comment is 0, blank is 7.
+includes\orderStatus.inc.php, code is 13, comment is 0, blank is 7.
+includes\privacy.html, code is 144, comment is 0, blank is 3.
+includes\productsTable.inc.php, code is 15, comment is 0, blank is 6.
+includes\purchase.inc.php, code is 43, comment is 0, blank is 19.
+includes\register.inc.php, code is 44, comment is 0, blank is 11.
+includes\regnews.inc.php, code is 37, comment is 2, blank is 10.
+includes\removeFromCart.inc.php, code is 14, comment is 0, blank is 4.
+includes\removeFromWishlist.inc.php, code is 14, comment is 0, blank is 4.
+includes\search.inc.php, code is 21, comment is 0, blank is 7.
+includes\shopDetails.inc.php, code is 19, comment is 0, blank is 9.
+includes\terms.html, code is 92, comment is 0, blank is 4.
+includes\uploadFiles.inc.php, code is 30, comment is 0, blank is 13.
+index.html, code is 60, comment is 71, blank is 11.
+index.php, code is 107, comment is 0, blank is 7.
+jquery-ui-1.13.1\AUTHORS.txt, code is 366, comment is 3, blank is 1.
+jquery-ui-1.13.1\external\jquery\jquery.js, code is 6891, comment is 1913, blank is 2079.
+jquery-ui-1.13.1\images\ui-icons_444444_256x240.png, it is a binary file.
+jquery-ui-1.13.1\images\ui-icons_555555_256x240.png, it is a binary file.
+jquery-ui-1.13.1\images\ui-icons_777620_256x240.png, it is a binary file.
+jquery-ui-1.13.1\images\ui-icons_777777_256x240.png, it is a binary file.
+jquery-ui-1.13.1\images\ui-icons_cc0000_256x240.png, it is a binary file.
+jquery-ui-1.13.1\images\ui-icons_ffffff_256x240.png, it is a binary file.
+jquery-ui-1.13.1\index.html, code is 446, comment is 16, blank is 41.
+jquery-ui-1.13.1\jquery-ui.css, code is 1224, comment is 49, blank is 42.
+jquery-ui-1.13.1\jquery-ui.js, code is 11051, comment is 1917, blank is 2479.
+jquery-ui-1.13.1\jquery-ui.min.css, code is 1, comment is 5, blank is 1.
+jquery-ui-1.13.1\jquery-ui.min.js, code is 1, comment is 4, blank is 1.
+jquery-ui-1.13.1\jquery-ui.structure.css, code is 821, comment is 36, blank is 29.
+jquery-ui-1.13.1\jquery-ui.structure.min.css, code is 1, comment is 3, blank is 1.
+jquery-ui-1.13.1\jquery-ui.theme.css, code is 403, comment is 30, blank is 13.
+jquery-ui-1.13.1\jquery-ui.theme.min.css, code is 1, comment is 3, blank is 1.
+jquery-ui-1.13.1\LICENSE.txt, code is 32, comment is 3, blank is 11.
+jquery-ui-1.13.1\package.json, code is 74, comment is 0, blank is 0.
+loader.gif, it is a binary file.
+lololol.php, code is 18, comment is 0, blank is 0.
+multimedia\1109873.jpg, it is a binary file.
+multimedia\1170820.jpg, it is a binary file.
+multimedia\120810-converse-4.png, it is a binary file.
+multimedia\1253259.jpg, it is a binary file.
+multimedia\315601-blackangel.jpg, it is a binary file.
+multimedia\417854.jpg, it is a binary file.
+multimedia\bb308407675cd38a8657f995ccb33e17.jpg, it is a binary file.
+multimedia\br1.jpg, it is a binary file.
+multimedia\br2.jpg, it is a binary file.
+multimedia\br3.jpg, it is a binary file.
+multimedia\c1.jpg, it is a binary file.
+multimedia\castr1.JPG, it is a binary file.
+multimedia\castr2.JPG, it is a binary file.
+multimedia\castrr1.jpg, it is a binary file.
+multimedia\castrr2.jpg, it is a binary file.
+multimedia\catHappy.jpg, it is a binary file.
+multimedia\exhaust 2.jpeg, it is a binary file.
+multimedia\exhaust1.jpeg, it is a binary file.
+multimedia\exhaust3.jpeg, it is a binary file.
+multimedia\FB_IMG_1605270103822.jpg, it is a binary file.
+multimedia\ghost-of-tsushima-desktop-wallpaper007.jpg, it is a binary file.
+multimedia\hotel1.jpg, it is a binary file.
+multimedia\jcole-walpp.jpg, it is a binary file.
+multimedia\jr1.jpg, it is a binary file.
+multimedia\jr2.jpg, it is a binary file.
+multimedia\loader.gif, it is a binary file.
+multimedia\nissan-logo.png, it is a binary file.
+multimedia\Piston-Definition.jpg, it is a binary file.
+multimedia\recaro-pole-position-fia-product.png, it is a binary file.
+multimedia\Screenshot 2022-01-10 160026.jpg, it is a binary file.
+multimedia\sea1.png, it is a binary file.
+multimedia\sea2.jpg, it is a binary file.
+multimedia\sp1.jpg, it is a binary file.
+multimedia\sp2.jpg, it is a binary file.
+multimedia\tow1.jpg, it is a binary file.
+multimedia\tow2.jpg, it is a binary file.
+multimedia\tow3.jpg, it is a binary file.
+multimedia\tr1.jpg, it is a binary file.
+multimedia\tr2.jpg, it is a binary file.
+multimedia\tr3.jpg, it is a binary file.
+multimedia\windscreen-insurance-coverage-list.jpg, it is a binary file.
+multimedia\WS-002-1-simota-air-filter-(1).jpg, it is a binary file.
+my-account.php, code is 59, comment is 0, blank is 3.
+order-tracking.php, code is 41, comment is 0, blank is 3.
+orders.php, code is 143, comment is 0, blank is 12.
+privacy-policy.php, code is 123, comment is 0, blank is 3.
+products-details.php, code is 188, comment is 3, blank is 12.
+register.php, code is 80, comment is 0, blank is 2.
+shop.php, code is 211, comment is 0, blank is 34.
+shopDetails.php, code is 29, comment is 0, blank is 2.
+team.php, code is 201, comment is 0, blank is 3.
+terms-of-service.php, code is 104, comment is 0, blank is 3.
+testWishlist.php, code is 171, comment is 0, blank is 3.
+transactionHistory.php, code is 76, comment is 0, blank is 9.
+uploadProduct.php, code is 120, comment is 0, blank is 10.
+uploadProductFiles.php, code is 42, comment is 0, blank is 9.
+wishlist.php, code is 88, comment is 0, blank is 12.
+===============================================================================

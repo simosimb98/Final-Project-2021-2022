@@ -42,20 +42,20 @@ include_once "includes/header.inc.php";
                                 <select name = "enginesize" id = "enginesize" required="">
                                 <option value="1.2">1.2</option>
                                 <option value="1.3">1.3</option>
-                                <option value="1.3">1.5</option>
-                                <option value="1.3">1.6</option>
-                                <option value="1.3">1.8</option>
-                                <option value="1.3">2.0</option>
-                                <option value="1.3">2.5</option>
-                                <option value="1.3">2.8</option>
-                                <option value="1.3">3.0</option>
-                                <option value="1.3">3.2</option>
-                                <option value="1.3">3.3</option>
-                                <option value="1.3">3.5</option>
-                                <option value="1.3">3.7</option>
-                                <option value="1.3">3.8</option>
-                                <option value="1.3">3.9</option>
-                                <option value="4.1">1.3</option>
+                                <option value="1.5">1.5</option>
+                                <option value="1.6">1.6</option>
+                                <option value="1.8">1.8</option>
+                                <option value="2.0">2.0</option>
+                                <option value="2.5">2.5</option>
+                                <option value="2.8">2.8</option>
+                                <option value="3.0">3.0</option>
+                                <option value="3.2">3.2</option>
+                                <option value="3.3">3.3</option>
+                                <option value="3.5">3.5</option>
+                                <option value="3.7">3.7</option>
+                                <option value="3.8">3.8</option>
+                                <option value="3.9">3.9</option>
+                                <option value="4.1">4.1</option>
                                 </select>
                                 <br>
                             </div>
@@ -85,7 +85,7 @@ include_once "includes/header.inc.php";
                                 <option value="Air Conditioning">Air Conditioning</option>
                                 <option value="Bearings">Bearings</option>
                                 <option value="Propshafts and Differentials">Propshafts and Differentials</option>
-                                <option value="Towbar parts">Towbar/Parts</option>
+                                <option value="Wheels">Wheels</option>
                                 <option value="Sensors Relays Control Units">Sensors, Relays, Control units</option>
                                 <option value="Repair kits">Repair Kits</option>
                                 <option value="Pipes and Hoses">Pipes and Hoses</option>
@@ -96,7 +96,7 @@ include_once "includes/header.inc.php";
                             
                             <div class="form-group">
                                 <label>Product name</label>
-                                <input type="text" data-parsley-required-message="Please enter the product's name" name = "productname" class="form-control" placeholder="Product name" data-parsley-length="[4, 25]" required="">
+                                <input type="text" data-parsley-required-message="Please enter the product's name" name = "productname" class="form-control" placeholder="Product name" data-parsley-length="[4, 50]" required="">
                             </div>
                             <div class="form-group">
                                 <label>Quantity</label>
@@ -113,7 +113,7 @@ include_once "includes/header.inc.php";
 
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control rounded-0" name="description" id="description" rows="3" cols="100" style = "height: 150px;"
+                                <textarea class="form-control rounded-0" name="description" id="description" rows="10" cols="100" style = "height: 150px;"
                                 data-parsley-required-message="Please enter a description" data-parsley-length="[10, 1200]" placeholder = "Description" required=""></textarea>
                             </div>
         

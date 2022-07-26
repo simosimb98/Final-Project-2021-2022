@@ -87,7 +87,7 @@ function sendEmail($emailFrom, $subject, $message)
     $emailText = "You have received a new message from: $emailFrom \n\n\n $message";
 
     if (mail($emailTo, $subject, $emailText, $headers)) {
-        header('Location: ../contactWithAccount.php?mail=sendagain');
+        header('Location: ../contactWithAccount.php?mail=sendAgain');
         
     } else {
         header('Location: ../contactWithAccount.php?mail=notSend');
@@ -105,7 +105,7 @@ function sendEmailPlainUser($emailFrom, $subject, $message)
     $emailText = "You have received a new message from: $emailFrom \n\n\n $message";
 
     if (mail($emailTo, $subject, $emailText, $headers)) {
-        header('Location: ../contact.php?mail=send');
+        header('Location: ../contact.php?mail=sendAgain');
         
     } else {
         header('Location: ../contact.php?mail=notSend');

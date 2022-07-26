@@ -73,8 +73,8 @@
                 <div class="col-lg-6 col-md-6">
                     <p>
                         Copyright © 2021 Maxon. All Rights Reserved by
-                        <a href="https://hibootstrap.com/" target="_blank">
-                            HiBootstrap
+                        <a href="https://www.cut.ac.cy/" target="_blank">
+                            Cyprus University of Technology
                         </a>
                     </p>
                 </div>
@@ -198,6 +198,26 @@ if (isset($_GET['item'])) {
                         ';
         }
         }
+
+        if (isset($_GET['item'])) {
+            if ($_GET['item'] == 'createAccount') {
+            echo '
+                    <script>
+                    $(document).ready(function(){
+                    Swal.fire({
+                        position: "center",
+                        icon: "warning",
+                        title: "Please register an account first!",
+                        showConfirmButton: false,
+                        timer: 5000                 
+                    }).then(function() {
+                        window.location="shop.php"
+                    })
+                    });                 
+                    </script>
+                            ';
+            }
+            }
 
 if (isset($_GET['updateDetails'])) {
     if ($_GET['updateDetails'] == 'successfull') {
@@ -383,7 +403,7 @@ if (isset($_GET['upload'])) {
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Your images have been uploaded!",
+                title: "Part has been uploaded succesfully!",
                 showConfirmButton: false,
                 timer: 3500                 
             }).then(function() {
@@ -452,7 +472,7 @@ if (isset($_GET['newsletter'])) {
     }
 }
 if (isset($_GET['mail'])) {
-    if ($_GET['mail'] == 'send') {
+    if ($_GET['mail'] == 'sendAgain') {
         echo '
             <script>
             $(document).ready(function(){
@@ -472,26 +492,6 @@ if (isset($_GET['mail'])) {
 }
 }
 
-if (isset($_GET['mail'])) {
-    if ($_GET['mail'] == 'sendagain') {
-        echo '
-            <script>
-            $(document).ready(function(){
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Thanks for contacting us. We will get back to you as
-                soon as possible!",
-                showConfirmButton: false,
-                timer: 5000                 
-            }).then(function() {
-                window.location = "contactWithAccount.php";
-            })
-            });                 
-            </script>
-            ';
-}
-}
 
 if (isset($_GET['mail'])) {
 if ($_GET['mail'] == 'notSend') {

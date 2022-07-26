@@ -62,6 +62,20 @@ $(document).ready(function() {
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Year</th>
+                                            <th>Engine</th>
+                                            <th>Category</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Shipping</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <?php include_once 'includes/productsTable.inc.php';?>
                                     </tbody>

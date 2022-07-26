@@ -109,22 +109,6 @@ include_once 'includes/capdb.inc.php';
                     <ul class="top-header-optional">
                         <li>Currency: <b>EU</b></li>
                         <li>
-                            <div class="dropdown language-switcher d-inline-block">
-                                <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <span>Language <i class='bx bx-chevron-down'></i></span>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item d-flex align-items-center">
-                                        <img src="assets/img/english.png" class="shadow-sm" alt="flag">
-                                        <span>English</span>
-                                    </a>
-                                    <a href="#" class="dropdown-item d-flex align-items-center">
-                                        <img src="assets/img/arab.png" class="shadow-sm" alt="flag">
-                                        <span>Greek</span>
-                                    </a>
-                                </div>
-                            </div>
                         </li>
                     </ul>
                 </div>
@@ -177,24 +161,10 @@ include_once 'includes/capdb.inc.php';
                     </li>';
                     }
                     ?>
-                    <?php
-                    if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) ){
-                       $uID = $_SESSION['userID'];       
-                       $sql = "SELECT *, SUM(orderprice) AS odr
-                                FROM orders AS a
-                                INNER JOIN orders_products AS b ON a.orderID = b.orderID
-                                INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
-                                INNER JOIN users AS d ON a.userID = d.userID
-                                WHERE c.userID = $uID AND a.orderstatus = 0 GROUP BY b.orderID";
+                            <?php
+                            if(isset($_SESSION['userID'])){
+                                $uID = $_SESSION['userID'];       
 
-                               $result = mysqli_query($conn, $sql);
-                               $resultCheck = mysqli_num_rows($result);
-                    ?>
-                    <li class="cart">
-                        <a href="orders.php"><i class="flaticon-online-payment"><span><?php echo $resultCheck;?></span></i>Orders</a>
-                    </li>
-
-                    <?php
                      $sqlwa = "SELECT * FROM
                                 waittinglist AS a
                                 INNER JOIN partsdetails AS b ON a.carpartID = b.carpartID
@@ -213,8 +183,7 @@ include_once 'includes/capdb.inc.php';
                               <!-- Dropdown - Messages -->
                               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Waitting list notifications
+                                <h6 class="dropdown-header">Waitting list notifications
                                 </h6>
                             
 
@@ -230,17 +199,41 @@ include_once 'includes/capdb.inc.php';
                                     while($rowWAL = mysqli_fetch_assoc($resultWAL)){
                                         if($rowWAL['quantity'] != 0){
                                 ?>
-
+                                <table>
+                                    <td>
+                            <a href="includes/removeFromWait.inc.php?waitid=<?php echo $rowWAL['carpartID'];?>" class="remove"><i class="bx bx-x"></i></a>
+                            </td>
+                            <td>
                                 <a class="dropdown-item d-flex align-items-center" href="products-details.php?id=<?php echo $rowWAL['carpartID']?>">
-                                    <div class="font-weight-bold">
                                         <div class="text-truncate"><?php echo $rowWAL['productname']?> IS BACK IN STOCK!</div>
-                                    </div>
-                                </a>
+                                        </a>
+                                        </td>
+                                        </table>
                                 <?php
                                  }
                                 ?>
                     <?php
+                                    }
                      }
+                     ?>
+                    <?php
+                    if(isset($_SESSION['role']) && ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) ){
+                       $uID = $_SESSION['userID'];       
+                       $sql = "SELECT *, SUM(orderprice) AS odr
+                                FROM orders AS a
+                                INNER JOIN orders_products AS b ON a.orderID = b.orderID
+                                INNER JOIN partsdetails AS c ON c.carpartID = b.carpartID
+                                INNER JOIN users AS d ON a.userID = d.userID
+                                WHERE c.userID = $uID AND a.orderstatus = 0 GROUP BY b.orderID";
+
+                               $result = mysqli_query($conn, $sql);
+                               $resultCheck = mysqli_num_rows($result);
+                    ?>
+                    <li class="cart">
+                        <a href="orders.php"><i class="flaticon-online-payment"><span><?php echo $resultCheck;?></span></i>Orders</a>
+                    </li>
+
+            <?php
                     }
                     ?>   
                 
@@ -278,6 +271,7 @@ include_once 'includes/capdb.inc.php';
                         </li>";
                         }
                         ?>
+                        
                     </ul>
                 </div>
             </div>
@@ -428,8 +422,8 @@ include_once 'includes/capdb.inc.php';
 
 <!-- Register Modal HTML -->
 <div id="registeruser" class="modal fade" >
-    <div class="modal-dialog ">
-    <div class="modal-content ">
+    <div class="modal-dialog">
+    <div class="modal-content" style="min-width:40%">
         <form id="registerForm" action="includes/register.inc.php" method="POST" data-parsley-validate="">
         <div class="modal-header">
             <h4 class="modal-title">Register</h4>
@@ -439,14 +433,16 @@ include_once 'includes/capdb.inc.php';
             <div style="float: left;">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" data-parsley-required-message="Please enter your name" name = "firstname" class="form-control" placeholder="Name" data-parsley-length="[4, 25]" data-parsley-group="block1" required="">
+                <input type="text" data-parsley-required-message="Please enter your name" name = "firstname" class="form-control" placeholder="Name" data-parsley-length="[4, 25]" data-parsley-group="block1"
+                data-parsley-length-message="Must be between 4 and 25 characters" required="">
                 <div class="valid-feedback">
                     Looks good!
                     </div>
             </div>
             <div class="form-group" >
                 <label>Surname</label>
-                <input type="text" data-parsley-required-message="Please enter your last name" name = "surname" class="form-control" placeholder="Surname" data-parsley-length="[4, 25]" data-parsley-group="block1" required="">
+                <input type="text" data-parsley-required-message="Please enter your last name" name = "surname" class="form-control" placeholder="Surname" data-parsley-length="[4, 25]" data-parsley-group="block1"
+                data-parsley-length-message="Must be between 4 and 25 characters" required="">
             </div>
             </div>
             <div style="float: right;">
@@ -457,13 +453,14 @@ include_once 'includes/capdb.inc.php';
             <div class="form-group">
                 <label>Phone</label>
                 <input type="number" data-parsley-required-message="Please enter your phone number" name = "phone" class="form-control" placeholder="Phone" data-parsley-minlength="8" 
-                    data-parsley-maxlength="16" required="">
+                data-parsley-minlength-message="Must be at least 8 digits" data-parsley-maxlength="16" data-parsley-maxlength-message="Must be less than 17 digits" required="">
             </div>
             </div>
             <div style="float: left;">
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" data-parsley-required-message="Please enter a password" name = "password" id = "password" class="form-control" placeholder="Password" data-parsley-length="[6, 25]" required="">
+                <input type="password" data-parsley-required-message="Please enter a password" name = "password" id = "password" class="form-control" placeholder="Password" data-parsley-length="[6, 25]" 
+                data-parsley-length-message="Must be between 6 and 25 characters" required="">
             </div>
             </div>
             <div style="float: right;">
@@ -476,7 +473,8 @@ include_once 'includes/capdb.inc.php';
             <div style="float: left;">
         <div class="form-group">
                 <label>City</label>
-                <input type="text" data-parsley-required-message="Please enter your city" name = "city" class="form-control" placeholder="City" data-parsley-length="[1, 25]" data-parsley-group="block1" required="">
+                <input type="text" data-parsley-required-message="Please enter your city" name = "city" class="form-control" placeholder="City" data-parsley-length="[1, 25]" data-parsley-group="block1" 
+                data-parsley-length-message="Must be between 2 and 25 characters" required="">
                 <div class="valid-feedback">
                     Looks good!
                     </div>
@@ -485,20 +483,23 @@ include_once 'includes/capdb.inc.php';
             <div style="float: right;">
             <div class="form-group">
                 <label>Country</label>
-                <input type="text" data-parsley-required-message="Please enter your last country" name = "country" class="form-control" placeholder="Country" data-parsley-length="[1, 25]" data-parsley-group="block1" required="">
+                <input type="text" data-parsley-required-message="Please enter your country" name = "country" class="form-control" placeholder="Country" data-parsley-length="[1, 25]" data-parsley-group="block1" 
+                data-parsley-length-message="Must be between 2 and 25 characters" required="">
             </div>
             </div>
             <div style="float: left;">
             <div class="form-group">
                 <label>Address</label>
-                <input type="text" data-parsley-required-message="Please enter your address" name = "address" class="form-control" placeholder="Address" data-parsley-length="[1,40]" required="">
+                <input type="text" data-parsley-required-message="Please enter your address" name = "address" class="form-control" placeholder="Address" data-parsley-length="[1,40]" 
+                data-parsley-length-message="Must be between 1 and 40 characters" required="">
             </div>
             </div>
             <div style="float: right;">
             <div class="form-group">
                 <label>Postal Code</label>
                 <input type="number" data-parsley-required-message="Please enter your postal code" name = "postalcode" class="form-control" placeholder="Postal Code" data-parsley-minlength="4" 
-                    data-parsley-maxlength="16" required="">
+                data-parsley-minlength-message="Must be at least 8 digits"
+                    data-parsley-maxlength="16" data-parsley-maxlength-message="Must be less than 17 digits" required="">
             </div>    
             </div>  
             <div class="form-group">

@@ -9,6 +9,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	//set PHP variables like this so we can use them anywhere in code below
 	$email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
 
+	$select = mysqli_query($conn, "SELECT `email` FROM `newsletter` WHERE `email` = '" . $_POST['email'] . "'") or exit(mysqli_error($conn));
+	if (mysqli_num_rows($select)) {
+
+        $_SESSION['lastVisitedPage'] .= '?error=emailExists';
+        header('location: ' . $_SESSION['lastVisitedPage']);
+        exit();
+	}
+
 
 	if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$_SESSION['lastVisitedPage'] .= '?error=invalidNewsletterEmail';
